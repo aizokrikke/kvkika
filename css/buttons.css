@@ -1,0 +1,48 @@
+.button_icon {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+    box-sizing: border-box;
+}
+.button_text {
+    float: left;
+    width: 82px;
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 5px;
+}
+
+.button_rood, .button_rood_small {
+    height: 20px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 10.89px;
+    background:url(../img/button_rood.jpg);
+    background-repeat:repeat-x;
+    border: 0px;
+    color: #FFF;
+    font-weight:bold;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+.button_paars, .button_paars_small {
+    height: 20px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 10.89px;
+    background:url(../img/button_paars.png);
+    background-repeat:repeat-x;
+    border: 0px;
+    color: #FFF;
+    font-weight:bold;
+    cursor:pointer;
+    border-radius: 5px;
+}
+.button_paars, .button_rood {
+    width: 132px;
+    padding: 0px 5px 0px 5px;
+    box-sizing: border-box;
+}
+.button_paars_small, .button_rood_small {
+    width: 90px;
+}
