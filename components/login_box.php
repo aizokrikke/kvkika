@@ -39,10 +39,13 @@
 		if (!empty($user['rechten']['beheer']))
 		  {
 ?>
-	<div class="button_paars" onclick="window.location='<?php echo $protocol.$domein; ?>?state=admin'" align="center">
-    	<img src="<?php echo $protocol.$domein; ?>/beheer/img/eleganticons-png/png/Config.png" alt="beheer" title="beheer" align="absmiddle" width="20" height="20" /> BEHEER
-    </div>
-	<br />
+        <div class="button_paars" onclick="window.location='<?php echo $protocol.$domein; ?>?state=admin'" align="center">
+            <img src="<?php echo $protocol.$domein; ?>/beheer/img/eleganticons-png/png/Config.png" alt="beheer" title="beheer" align="absmiddle" width="20" height="20" /> BEHEER
+        </div>
+        <div class="button_paars" onclick="window.location='<?php echo $protocol.$domein; ?>/webmail'" align="center">
+          <img src="<?php echo $protocol.$domein; ?>/beheer/img/eleganticons-png/png/Mail.png" alt="webmail" title="webmail" align="absmiddle" width="20" height="20" /> WEBMAIL
+        </div>
+        <br />
 
 <?php		  
 		  }        
