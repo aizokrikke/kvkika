@@ -1,0 +1,4 @@
+  # enable the rewriter
+  RewriteEngine On
+  # anything under / is treated as an article title
+  RewriteRule ^(.+)$ ../deelnemers.php?pag=$1 [PT,L,QSA] 

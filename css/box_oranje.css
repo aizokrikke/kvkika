@@ -1,0 +1,31 @@
+/* CSS Document */
+
+h2 {
+	font-size: 24px;
+	line-height:32px;
+	font-weight: bold;
+	margin-top: 0px;
+}
+
+h3 {
+	font-size: 24px;
+	line-height:32px;
+	font-weight: bold;
+	color: #560666;
+	margin-top: 0px;
+}
+
+
+.box_lead {
+	font-weight: bold;
+}
+
+body {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight:normal;
+	line-height:18px;
+	color: #FFF;
+	background: #e95005;
+}
+

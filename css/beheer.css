@@ -1,0 +1,180 @@
+/* CSS Document */
+
+
+#beheer_header, #beheer_footer {
+	font-family:Arial, Helvetica, sans-serif;	
+	padding-bottom: 5px;
+	padding-top: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#beheer_header {
+	border-bottom: #c63a0a 1px solid;
+	font-size: 1em;
+	font-weight:bold;
+	margin-bottom: 10px;	
+}
+
+#beheer_footer {
+	font-size: 0.8em;
+	width: 1014px;
+	position:absolute;
+	border-top: #c63a0a 1px solid;
+	bottom: 0px;
+}
+
+#beheer_logo {
+	float: right;
+	margin-right: 5px;
+}
+
+#beheer_header_icon, #beheer_header_text {
+	float:left;
+}
+
+#beheer_header_text {
+	padding-top:14px;
+	margin-left: 10px;
+}
+
+#beheer_container {
+	margin-left: 5px;
+	martin-right: 5px;
+}
+
+UL {
+	list-style:none;
+}
+
+LI {
+	height: 64px;
+}
+
+.formveld {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	float:left;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.formregeleinde {
+	clear: both;
+}
+
+#db_menubalk {
+	margin-top: 10px;
+	padding: 5px;
+	border-radius: 5px;
+	background:#ccc;
+	color: #666;
+	font-size:12px;
+	text-align:center;
+}
+	
+.db_in_box {
+	float:left;
+	margin-right:20px;
+	margin-bottom:20px;
+	min-width:305px;
+}
+
+.db_input, .db_input_naam {
+	border-radius: 5px;
+	padding: 5px;
+	border: 0px;
+	background:#ccc;
+	font-size:12px;
+	color: #333;
+	border: #999 1px solid;
+	box-shadow: rgba(255,255,255,0.2) 3px 3px inset;
+}
+.db_input {
+	width:300px;
+}
+.db_input_naam {
+	width: 940px;
+}
+.db_button {
+	width: 160px;
+	border-radius: 5px;
+	padding: 5px;
+	border: 0px;
+	background:#ccc;
+	font-size:12px;
+	color: #333;
+	cursor:pointer;
+	border: #999 1px solid;
+	box-shadow: rgba(255,255,255,0.2) 3px 3px inset;
+	
+}
+#db_start_tijd, #db_eind_tijd {
+	width: 242px;
+	border-radius: 5px;
+	padding: 5px;
+	border: 0px;
+	background:#ccc;
+	font-size:12px;
+	color: #333;
+	margin-top: 10px;
+}
+.db_doc_extra {
+	color:#999;
+	font-size:12px;
+}
+
+#db_mask {
+	position:fixed;
+	z-index: 10;
+	background:#666;
+	opacity:0.6;
+	filter:alpha(opacity=60); /* For IE8 and earlier */
+	width:100%;
+	height:100%;
+	top:0px;
+	left:0px;
+	display:none;
+}
+
+#db_upload {
+	position:fixed;
+	left: 50%;
+	margin-left: -150px;
+	top: 200px;
+	width:300px;
+	height:150px;
+	background:#fff;
+	border: #666 1px solid;
+	z-index:50;
+	box-shadow: rgba(0,0,0,0.5) 5px 5px;
+	display: none;
+}
+	
+#db_upload_close {
+	position:absolute;
+	right: 5px;
+	top: 5px;
+	z-index: 60;
+}
+
+.gestart, .gestart a:link, .gestart a:visited, .gestart a:active {
+	color:#060;
+}
+.gereed, .gereed a:link, .gereed a:visited, .gereed a:active {
+	color: #999;
+	font-style:italic;
+}
+.db_small {
+	font-size:9px;
+}
+
+H3 {
+	margin-bottom: 10px;
+}
+
+.db_table td {
+}
+.afsluiten {
+	clear:both;
+}

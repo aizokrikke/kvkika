@@ -1,0 +1,48 @@
+/* CSS Document */
+
+.cms_regel {
+	border-bottom: #e95005 1px dotted;
+	margin-bottom: 10px;
+	padding-bottom: 5px;
+}
+.cms_table_item, .cms_table_txt, .cms_table_datum, .cms_table_naam {
+	float: left;
+	margin-right: 10px;
+}
+.cms_table_txt {
+	width: 300px;
+	height:70px;
+	overflow:hidden;
+}
+.cms_table_datum {
+	width: 150px;
+}
+.cms_table_naam {
+	width: 150px;
+}
+#cms_txt_editor {
+	position:absolute;
+	border: #560666 1px solid;
+	width: 600px;
+	top: 20px;
+	left: 220px;
+	display:none;
+	height:220px;
+	background:#FFF;
+	padding: 10px;
+}
+
+#cms_datum_editor {
+	position:absolute;
+	border: #560666 1px solid;
+	width: 200px;
+	top: 20px;
+	left: 420px;
+	display:none;
+	height:220px;
+	background:#FFF;
+	padding: 10px;
+}
+#cms_foto {
+	margin-top: 10px;
+}
