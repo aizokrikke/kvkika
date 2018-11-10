@@ -1,0 +1,181 @@
+<?php 
+function user_has_right($user,$recht) {
+	$suc=($row=mysql_fetch_row(mysql_query("select id from rechten where user='$user' and recht='$recht' and verwijderd<>'j'")));
+	RETURN $suc;
+}
+
+$id=$_REQUEST['id'];
+$voornaam=$_REQUEST['voornaam'];
+$voorvoegsel=$_REQUEST['voorvoegsel'];
+$achternaam=$_REQUEST['achternaam'];
+$email=$_REQUEST['email'];
+$login_naam=$_REQUEST['login_naam'];
+$pass1=$_REQUEST['pass1'];
+$pass2=$_REQUEST['pass2'];
+$do=$_REQUEST['do'];
+$act=$_REQUEST['act'];
+
+//echo "do: $do, act: $act";
+
+if ($act=='flip_actief')
+  {
+	  $r=mysql_fetch_row(mysql_query("select actief from beheerders where persoon='$id'"));
+	  if ($r[0]=='j') { $actief='n'; } else { $actief='j'; }
+	  mysql_query("update beheerders set actief='$actief' where persoon='$id'");
+	  $act='';
+  }
+
+
+// formulier afhandelen
+	switch ($do) {
+		case 'verwijderen':
+			mysql_query("update beheerders set verwijderd='j' where persoon='$id'");
+			$act='';
+		break;
+		case 'opslaan':
+			if (empty($login_naam)) { $err[]='geen login ingevoerd'; }
+			if (empty($achternaam)) { $err[]='geen achternaam ingevoerd'; }
+			if ((!empty($pass1)) and ($pass1<>$pass2)) { $err[]='passwords zijn niet gelijk'; }
+			$login_naam=strtolower($login_naam);
+			$login_md5=md5($login_naam);
+			$password_md5=md5($pass1);
+
+			if (empty($err))
+			  {
+				mysql_query("update personen set voornaam='$voornaam', voorvoegsel='$voorvoegsel', achternaam='$achternaam', email='$email', login='$login_naam', login_md5='$login_md5', password_md5='$password_md5' where id='$id'");
+				$act='';
+			  }
+		break;
+		case 'toevoegen' :
+			if (empty($login_naam)) { $err[]='geen login ingevoerd'; }
+			if (empty($achternaam)) { $err[]='geen achternaam ingevoerd'; }
+			if ((!empty($pass1)) and ($pass1<>$pass2)) { $err[]='passwords zijn niet gelijk'; }
+			$login_naam=strtolower($login_naam);
+			$login_md5=md5($login_naam);
+			$password_md5=md5($pass1);
+
+			if (empty($err))
+			  {
+				mysql_query("insert into personen (voornaam, voorvoegsel, achternaam, email, login, login_md5, password_md5) values ('$voornaam', '$voorvoegsel', '$achternaam', '$email', '$login_naam', '$login_md5', '$password_md5') ") or die(mysql_error());
+				$id=mysql_insert_id();
+				mysql_query("insert into beheerders (persoon, actief) values ('$id','j')");
+				$act='';
+			  }
+		break;
+	} // switch
+		
+	if (!empty($err))
+	  {
+		  foreach ($err as $val)
+		    {
+?>
+				<div class="error">Oeps... <?php echo $val; ?></div>				
+<?php
+			}
+	  }
+
+	if (empty($act))
+	  {
+
+?>
+	<table>
+    	<tr valign="top"><td></td><td></td><td></td><td><small>actief</small></td>
+<?php $res=mysql_query("select recht from rechtendef order by id");
+	  while ($row=mysql_fetch_row($res)) { ?><td width="55" align="center"><small><?php echo $row[0]; ?></small></td><?php } ?>        
+        
+        </tr>
+<?php
+	$res=mysql_query("select beheerders.id, voornaam, voorvoegsel, achternaam, actief, personen.id from beheerders, personen where beheerders.persoon=personen.id and personen.verwijderd!='j' and beheerders.verwijderd!='j' order by achternaam, voornaam") or die(mysql_error());
+	
+	while ($row=mysql_fetch_row($res))
+	  {
+?>
+	<tr>
+    	<td width="30"><a href="?state=admin&go=admin&act=edit&id=<?php echo $row[5]; ?>"><img src="beheer/img/eleganticons-png/png/Pencil.png"width="24" height="24" alt="bewerken" title="bewerken"></a></td>
+        <td width="30"><a href="?state=admin&go=beheerders&act=del&id=<?php echo $row[5]; ?>"><img src="beheer/img/eleganticons-png/png/X.png" width="24" height="24" alt="verwijderen" title="verwijderen"></a></td>
+    	<td width="200"><a href="?state=admin&go=beheerders&act=edit&id=<?php echo $row[5]; ?>">
+		<?php echo $row[1]; 
+		if (!empty($row[2])) { echo " $row[2]"; } 
+		if (!empty($row[3])) { echo " $row[3]"; }?></a></td>
+    	
+    	<td width="50"><a href="?state=admin&go=beheerders&act=flip_actief&id=<?php echo $row[5]; ?>"><img src="beheer/img/eleganticons-png/png/Checkmark<?php if ($row[4]!='j') { echo "_inactive"; } ?>.png" width="24" height="24" <?php if ($row[4]=='j') { ?> alt="actief" title="actief"<?php } else { ?> alt="inactief" title="inactief"<?php } ?>></a></td>
+<?php
+        $rres=mysql_query("select id, recht, beschrijving from rechtendef order by id");
+		while ($rrow=mysql_fetch_row($rres)) 
+		  { ?>
+          <td align="center"><a href="javascript:void();" onClick="do_flipRecht(<?php echo $row[5]; ?>,<?php echo $rrow[0]; ?>);"><?php			  
+			  if (user_has_right($row[5],$rrow[0]))
+			  	 { ?><img src="beheer/img/eleganticons-png/png/Checkmark.png" title="<?php echo $rrow[2]; ?>" alt="<?php echo $rrow[2]; ?>" width="24" height="24"><?php } 
+				 else 
+				 { ?><img src="beheer/img/eleganticons-png/png/Checkmark_inactive.png" alt="<?php echo $rrow[2]; ?>" title="<?php echo $rrow[2]; ?>" width="24" height="24"><?php } ?></a>
+   		  </td>
+<?php 
+		  } // while
+?>			  
+    </tr>    
+        
+<?php		  
+	  } // while
+
+?>
+	</table>
+    <br /><br />
+    <a href="?state=admin&go=beheerders&act=new"><img src="beheer/img/beheerder.png" align="absmiddle" height="16" width="16"> Nieuwe beheerder toevoegen</a>
+    
+<?php
+	  }
+	  else
+	  {
+		  if ((($act=='edit') or ($act=='del')) and ($opnieuw!='j'))
+		    { $r=mysql_fetch_row(mysql_query("select voornaam, voorvoegsel, achternaam, email, login from personen where id='$id' and verwijderd!='j'"));
+				$voornaam=$r[0];
+				$voorvoegsel=$r[1];
+				$achternaam=$r[2];
+				$email=$r[3];
+				$login_naam=$r[4];
+			}
+			
+?>
+	<?php if ($act=='new') { ?><h3>Nieuwe beheerder</h3><?php } else { ?><h3>Beheerder<?php if ($act=='del') { ?> verwijderen<?php } ?></h3><?php } ?> 
+	<form action="?state=admin&go=beheerders&act=<?php echo $act; ?>" method="post">
+    <input type="hidden" name="opnieuw" value="j" />
+    <input type="hidden" name="id" value="<?php echo $id; ?>" />
+    <div style="float: left; margin-right:10px;">voornaam<br />
+    <input type="text" name="voornaam" value="<?php echo $voornaam; ?>" size="30" />
+    </div>
+    <div style="float: left; margin-right:10px;">voorvoegsel<br />
+   <input type="text" name="voorvoegsel" value="<?php echo $voorvoegsel; ?>" size="10" />
+   </div>
+    <div style="float: left; margin-right:10px;">achternaam<br />
+   <input type="text" name="achternaam" value="<?php echo $achternaam; ?>" size="30" />
+   </div>
+   <div style="clear:both"></div><br /><br />
+   email<br />
+   <input type="text" name="email" value="<?php echo $email; ?>" size="30" /><br /><br />   
+   login<br />
+   <input type="text" name="login_naam" value="<?php echo $login_naam; ?>" size="30" /><br /><br />
+   
+    <div style="float: left; margin-right:10px;">password<br />
+   <input type="password" name="pass1" value="<?php echo $pass1; ?>" />
+   </div>
+    <div style="float: left; margin-right:10px;">herhaal password<br />
+   <input type="password" name="pass2" value="<?php echo $pass2; ?>" />
+   </div>
+   <div style="clear:both"></div>
+   <?php if ($act!='new') { ?>laat leeg om password te behouden<?php } ?><br /><br />
+   
+<?php 
+	switch ($act) {
+	case 'edit': ?><input type="submit" name="do" value="opslaan" /><?php break;    
+	case 'del': ?><input type="submit" name="do" value="verwijderen" /><?php break;    
+	case 'new': ?><input type="submit" name="do" value="toevoegen" /><?php break;    
+	}
+?> <input type="submit" name="annuleren" value="annuleren" />
+	</form>
+		
+
+
+<?php
+	  }
+?>	  
+	  

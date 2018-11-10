@@ -1,0 +1,114 @@
+/* CSS Document */
+
+
+
+.formitem a:link, .formitem a:active, .formitem a:visited {
+	text-decoration:underline;
+	font-weight:bold;
+}
+.formitem a:hover {
+	text-decoration:underline;
+	font-weight:bold;
+	color: #aa189f;
+}
+
+
+
+#voornaam, #tussenvoegsel, #achternaam, #straat, #nummer, #pc, #plaats, #geb_jaar, #geb_dag, #geb_maand, #email, #telefoon, #mobiel, #geslacht, #school, #pagina, #login, #password, #password_check, #v_voornaam, #v_achternaam, #v_tussenvoegsel, #v_email, #v_mobiel, #v_telefoon, #soort, #teamnaam {
+	font-size: 12px;
+	padding: 5px;
+	border: 1px solid #e95005;
+}
+
+#tussenvoegsel, #nummer, #v_tussenvoegsel {
+	width:95%
+}
+
+
+#voornaam, #achternaam, #straat, #plaats, #telefoon, #mobiel, #password, #password_check, #login, #pagina, #v_voornaam, #v_achternaam, #v_mobiel, #v_telefoon {
+	width: 95%
+}
+#email, #school, #v_email, #teamnaam {
+	width: 95%
+}
+
+#pc_cijfer, #geb_jaar {
+	width: 50px;
+}
+#pc_letter, #geb_dag {
+	width: 30px;
+}
+
+.formitem_small {
+	float:left;
+	margin-right:10px;
+	font-size:9px;
+	margin-bottom: 10px;
+}
+
+.formitem_small_close {
+	clear:both;
+}
+
+.formitem {
+	/*float:left;*/
+	margin-right:10px;
+	font-size:9px;
+	margin-bottom: 10px;
+}
+
+
+@media all and (min-width: 770px) {
+.formitem_small_close {
+	clear:none;
+}
+	
+.formitem {
+	float:left;
+	margin-right:10px;
+	font-size:9px;
+	margin-bottom: 10px;
+}	
+	
+#voornaam, #tussenvoegsel, #achternaam, #straat, #nummer, #pc_cijfer, #pc_letter, #plaats, #geb_jaar, #geb_dag, #geb_maand, #email, #telefoon, #mobiel, #geslacht, #school, #pagina, #login, #password, #password_check, #v_voornaam, #v_achternaam, #v_tussenvoegsel, #v_email, #v_mobiel, #v_telefoon {
+	font-size: 12px;
+	padding: 5px;
+	border: 1px solid #e95005;
+	/*
+	-moz-box-shadow:    inset 3px 3px rgba(0,0,0,0.2);
+   	-webkit-box-shadow: inset 3px 3px rgba(0,0,0,0.2);
+   	box-shadow:         inset 3px 3px rgba(0,0,0,0.2);
+	*/
+}
+
+#tussenvoegsel, #nummer, #v_tussenvoegsel {
+	width:100px;
+}
+
+
+#voornaam, #achternaam, #straat, #plaats, #telefoon, #mobiel, #password, #password_check, #login, #pagina, #v_voornaam, #v_achternaam, #v_mobiel, #v_telefoon {
+	width: 200px;
+}
+#email, #school, #v_email, #teamnaam {
+	width:400px;
+}
+
+#pc_cijfer, #geb_jaar {
+	width: 50px;
+}
+#pc_letter, #geb_dag {
+	width: 30px;
+}
+}
+
+
+
+.formfout {
+	font-size:11px;
+	font-weight:bold;
+	color: #F00;
+}
+.paginanaam {
+	color: #FF0000;
+	font-style: italic;
+}

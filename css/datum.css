@@ -1,0 +1,25 @@
+/* CSS Document */
+
+.datum_invoer_jaar,  .datum_invoer_maand, .datum_invoer_weekdag, .datum_invoer_dag, .datum_invoer_dag_off, .datum_invoer_dag_select {
+	text-align:center;
+	font-size:11px;
+ }
+.datum_invoer_weekdag, .datum_invoer_dag, .datum_invoer_dag_off {
+	padding: 2px;
+	text-align:center;
+}
+.datum_invoer_dag_off {
+	background-color:#ddd;
+}
+.datum_invoer_jaar, .datum_invoer_maand {
+	background-color:#560666;
+	color:#FFF;
+}
+.datum_invoer_weekdag {
+	background-color: #6b368a;
+	color:#FFF;
+}
+.datum_invoer_dag_select {
+	background-color:#e95005;
+}
+

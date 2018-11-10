@@ -1,0 +1,1 @@
+<?php header("location: https://dev.kinderenvoorkika.nl/?state=admin");?>

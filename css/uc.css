@@ -1,0 +1,167 @@
+@import url('beheer.css');
+
+
+body {
+	background:#CCC;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+#container {
+	background: url(../img/Kika-backdrop.jpg) no-repeat #5c0b50;
+	color:#FFF;
+	width: 1024px;
+	height: 100%;
+	min-height: 768px;
+	margin: 0px auto;
+	font-family:Arial, Helvetica, sans-serif;
+	position:relative;
+}
+
+/* under construcntion site */
+
+#uc_header {
+	height: 288px;
+	background:url(../img/Kika_header_under_construction.png) no-repeat;
+	color:#e94806;
+	position:relative;
+	
+}
+#uc_kop {
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	font-size:2.5em;
+	position:absolute;
+	top: 101px;
+	left: 280px;
+	text-align:center;
+}
+
+#uc_mail_ons {
+	position:absolute;
+	top: 530px;
+	left: 448px;
+}
+
+#uc_tekstblok {
+	position:absolute;
+	top: 328px;
+	left: 704px;
+	width: 234px;
+	color:#FFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height: 16px;
+}
+
+#im{
+	width:400px;
+	position:absolute;
+	color:#FFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	line-height: 16px;
+	top: 220px;
+	left: 235px;
+	background:#380F34;
+	border: #fff 5px solid;
+	padding: 20px 10px 10px 10px;
+	box-shadow: rgba(0,0,0,0.4) 10px 10px;
+}
+#im_foto {
+	border:#FFF 5px solid;
+	margin: 0px auto;
+	padding: 0px;
+	width: 300px;
+	height: 217px;
+}
+
+#uc_mailform {
+	position:absolute;
+	top: 328px;
+	left: 54px;
+	width: 250px;
+	color:#FFF;
+	font-size: 12px;
+	font-family:Arial, Helvetica, sans-serif
+}
+
+#colofon {
+	color: #aa189f;
+	font-size: 11px;
+	font-family:Arial, Helvetica, sans-serif;
+	position:absolute;
+	top: 750px;
+	left: 30px;
+}
+
+#uc_twitter {
+	position:absolute;
+	left: 841px;
+	top:683px;
+}
+
+#uc_fb {
+	position:absolute;
+	left: 887px;
+	top:683px;
+}
+
+#uc_linkedin {
+	position:absolute;
+	left: 932px;
+	top:683px;
+}
+
+#uc_beheer {
+	position:absolute;
+	left: 932px;
+	top:736px;
+}	
+
+.uc_formregel {
+	margin-bottom: 7px;
+}
+
+
+.kop {
+	font-weight: bold;
+	font-size: 18px;
+	color:#e94806;
+}
+
+.kika_button {
+	border: 0px;
+	color: #FFF;
+	background: #e94806;
+	padding-top:2px;
+	padding-bottom:2px;
+	
+}
+
+.error {
+	font-size: 12px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#aa189f;
+}
+
+.oranje {
+	color:#e94806;
+}
+.lila {
+	color: #aa189f;
+}
+
+IMG {
+	border: 0px;
+}
+	
+a:link, a:visited, a:active {
+	color: #FFF;
+	text-decoration:none
+}
+a:hover {
+	color: #aa189f;
+	text-decoration:none;
+}

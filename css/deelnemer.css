@@ -1,0 +1,22 @@
+/* CSS Document */
+
+
+#bedrag,#rekening, #naam, #email, #adres, #plaats, #telefoon {
+	font-size: 12px;
+	padding: 5px;
+	border: 1px solid #e95005;
+}
+
+#rekening, #naam, #email, #adres, #plaats, #telefoon {
+	width: 250px;
+}
+
+#bedrag {
+	width: 230px;
+}
+
+#valuta {
+	width: 20px;
+	float: left;
+	padding-top: 5px;
+}
