@@ -8,6 +8,7 @@ function connect($db_server,$db_username,$db_password, $db_name) {
     	die ("Could not connect to MySQL server");
             mysql_select_db ($db_name, $db) or
         die ("Could not select database");
+            
 		return $db;
 }
 
