@@ -1,31 +1,33 @@
 <?php
+echo "\npagina\n$id";
+if (empty($id)) {
+    $id = 1;
+}
+$id = strtolower($id);
+$q = "select foto, lead, body, views, menu, inschrijfbutton from " . $sitestatus . "pagina where (id = '$id' or naam like '$id') and verwijderd != 'j'";
 
-if (empty($id)) { $id=1; }
-$id=strtolower($id);
-$q="select foto, lead, body, views, menu, inschrijfbutton from ".$sitestatus."pagina where (id='$id' or naam like '$id') and verwijderd!='j'";
-//echo $q;
-$p=mysql_fetch_row(mysql_query($q)); 
-if (!empty($p))
-  {	
-	$foto=$p[0];
-	$lead=stripslashes($p[1]);
-	$body=stripslashes($p[2]);
-	$views=$p[3];
+$p = db_row($q);
+if (!empty($p)) {
+	$foto = $p[0];
+	$lead = stripslashes($p[1]);
+	$body = stripslashes($p[2]);
+	$views = $p[3];
 	$views++;
-	mysql_query("update ".$sitestatus."pagina set views='$views' where id='$id'");
-	$s=$p[4];
+	db_query("update " . $sitestatus . "pagina set views = '$views' where id = '$id'");
+	$s = $p[4];
 	//$button=$p[5];
-	$button='n';
+	$button = 'n';
+  } else {
+    $foto = 1;
+   	$lead = "Geselecteerde pagina is niet gevonden";
+   	$body = '';
+	$s = 1;
+	$button = 'n';
   }
-  else
-  { $foto=1;
-   	$lead="Geselecteerde pagina is niet gevonden";
-   	$body='';
-	$s=1;
-	$button='n';
-  }
-if ($subdomein=='dev') { $s=$s+10; }  
-  
+if ($subdomein == 'dev') {
+    $s = $s + 10;
+}
+
 include('components/header.php');
 ?>
 

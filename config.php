@@ -1,30 +1,40 @@
 <?php
 // config.php
 
-$sitestatus="";
+$sitestatus = "";
 
-$domein=$_SERVER['SERVER_NAME'];
-$dparts=explode('.',$domein);
-$d_land=array_pop($dparts);
-$d_main=array_pop($dparts);
-$subdomein=array_pop($dparts);
-$hoofddomein=$d_main.'.'.$d_land;
-$base_url='www.'.$hoofddomein;
+$domein = $_SERVER['SERVER_NAME'];
+$dparts = explode('.',$domein);
+$d_land = array_pop($dparts);
+$d_main = array_pop($dparts);
+$subdomein = array_pop($dparts);
+$hoofddomein = $d_main.'.'.$d_land;
+$base_url = 'www.'.$hoofddomein;
 
-if (!empty($_SERVER['HTTPS'])) { $protocol="https://"; } else { $protocol="http://"; }
+if (!empty($_SERVER['HTTPS'])) {
+    $protocol="https://";
+} else {
+    $protocol="http://";
+}
 
-if ($subdomein=='dev') 
-  { $sitestatus='dev_'; }
+if ($subdomein == 'dev')
+  {
+      $sitestatus = 'dev_';
+  }
 
 $db_server = 'localhost';
-if ($sitestatus!='dev_')
-  { $db_name = 'kvkika_db'; }
+if ($sitestatus != 'dev_')
+  {
+      $db_name = 'kvkika_db';
+  }
   else
-  { $db_name = 'kvkika_dev'; }
+  {
+      $db_name = 'kvkika_dev';
+  }
 $db_username = 'kvkika_gen';
 $db_password = 'Z3lfl13fd3';
 
-$siteroot=dirname(__FILE__);
+$siteroot = dirname(__FILE__);
 
 $user_cookienaam = "kvkika_ck";
 
