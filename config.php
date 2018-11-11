@@ -12,9 +12,9 @@ $hoofddomein = $d_main.'.'.$d_land;
 $base_url = 'www.'.$hoofddomein;
 
 if (!empty($_SERVER['HTTPS'])) {
-    $protocol="https://";
+    $protocol = "https://";
 } else {
-    $protocol="http://";
+    $protocol = "http://";
 }
 
 if ($subdomein == 'dev')
@@ -49,7 +49,5 @@ $foto_dir = '/home/kvkika/domains/kinderenvoorkika.nl/public_html/fotos';
 $foto_dir_dev = '/home/kvkika/domains/kinderenvoorkika.nl/public_html/dev/fotos';
 
 // time-out voor sponsoring
-
-$time_out = 24*60*60;   // 1 dag
-
+$time_out = 24 * 60 * 60;   // 1 dag
 ?>
