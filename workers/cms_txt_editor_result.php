@@ -4,17 +4,17 @@ setlocale(LC_ALL,"nl_NL");
 require('../../libs/connect.php');
 require('../../logon/check_logon.php');
 
-$id=mysql_real_escape_string($_REQUEST['id']);
-$veld=mysql_real_escape_string($_REQUEST['veld']);
-$tekst=mysql_real_escape_string($_REQUEST['tekst']);
+$id = $_REQUEST['id'];
+$veld = $_REQUEST['veld'];
+$tekst = $_REQUEST['tekst'];
 
+if ($id == 'nieuws_nieuw') {
+    db_query("insert into dev_nieuws (" . db_esc($veld) . ") values ('" . db_esc($tekst) . "')");
+} else {
+    db_query("update dev_nieuws set $veld = '" . db_esc($tekst) . "' where id='" . db_esc($id) . "'");
+}
 
-if ($id=='nieuws_nieuw')
-  { mysql_query("insert into dev_nieuws ($veld) values ('$tekst')"); }
-  else
-  { mysql_query("update dev_nieuws set $veld='$tekst' where id='$id'"); }
-
-$r=mysql_fetch_row(mysql_query("select id, lead, body, datum, status from dev_nieuws where id='$id' and verwijderd!='j'"))
+$r=db_row("select id, lead, body, datum, status from dev_nieuws where id='" . db_esc($id) . "' and verwijderd != 'j'")
 
 ?>
         <div class="cms_table_item"><a href="?state=admin&go=content&m=nieuws&act=del&id=<?php echo $r[0]; ?>"><img src="beheer/img/24x24/editcut.png" title="verwijderen" alt="verwijderen"></a></div>

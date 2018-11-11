@@ -48,9 +48,20 @@
     }
 
     function db_esc($in) {
-        global $mysqli;
+        global $db;
 
-        return mysqli_real_escape_string($mysqli, $in);
+        return mysqli_real_escape_string($db, $in);
+    }
+
+    function db_num_rows($resource) {
+
+        return $resource->num_rows();
+    }
+
+    function insert_id() {
+        global $db;
+
+        return $db->insert_id();
     }
 
 ?>

@@ -1,8 +1,8 @@
 <?php require('../libs/connect.php');
 
-$id=$_REQUEST['id'];
+$id = $_REQUEST['id'];
 
-$r=mysql_fetch_row(mysql_query("select foto, ext from fotos where id='".mysql_real_escape_string($id)."' and verwijderd!='j'"));
+$r = db_row("select foto, ext from fotos where id='".db_esc($id)."' and verwijderd != 'j'");
 
 switch ($r[1]) {
 	case 'jpg';
@@ -17,6 +17,6 @@ switch ($r[1]) {
 	case 'gif':
 		header('Content-type: image/gif');
 	break;
-} // switch
+}
 echo $r[0];
 ?>

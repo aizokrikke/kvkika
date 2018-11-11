@@ -14,10 +14,7 @@ $menu_id = strtolower($_REQUEST['mobile_menu_id']);
 if (!empty($menu_id))
   {
 	  $mr = db_row("select actie, extern from menu where id = '" . db_esc($menu_id) . "' and verwijderd != 'j' order by id asc");
-	  //echo "mobile menu afhandelen... ";
-	  //print_r($mr);
 	  preg_match("/(state\=){1}([a-z]{1,})/",$mr[0],$matches);
-	  //print_r($matches);
 	  $state = $matches[2];
   }
 
@@ -34,7 +31,6 @@ if (empty($state))
 			  $state = $row[0];
 			}
 	}
-//echo "status: $sitestatus, $protocol <br>";
 
 if (($protocol != 'https://') and ($sitestatus != 'dev_'))
   { 

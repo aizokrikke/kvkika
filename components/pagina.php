@@ -1,5 +1,4 @@
 <?php
-echo "\npagina\n$id";
 if (empty($id)) {
     $id = 1;
 }
