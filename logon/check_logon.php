@@ -66,7 +66,7 @@ function login($login,$password,$set_cookie = 'j') {
     
 	
   	$password_md5 = md5($password);
-	//echo "login: $login $password $password_md5<br>";
+//	echo "login: $login $password $password_md5<br>";
 	
 	$res = db_query("SELECT id,voornaam, voorvoegsel, achternaam, login_md5 FROM personen WHERE login='$login' and password_md5='$password_md5' and verwijderd!='j' ORDER BY login") or die(mysql_error());
 	if ($row = db_row($res)) {  // user wel in database

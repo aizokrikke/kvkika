@@ -1,37 +1,35 @@
 <?php
 include_once('libs/is_email.php');
-$soort=$_REQUEST['soort'];
-$teamnaam=$_REQUEST['teamnaam'];
-$voornaam=$_REQUEST['voornaam'];
-$tussenvoegsel=$_REQUEST['tussenvoegsel'];
-$achternaam=$_REQUEST['achternaam'];
-$naam=$achternaam;
-$straat=$_REQUEST['straat'];
-$nummer=$_REQUEST['nummer'];
-$pc=$_REQUEST['pc'];
-$plaats=$_REQUEST['plaats'];
-$geb_dag=voorloop_nul($_REQUEST['geb_dag'],2);
-$geb_maand=voorloop_nul($_REQUEST['geb_maand'],2);
-$geb_jaar=$_REQUEST['geb_jaar'];
-$geslacht=mysql_real_escape_string($_REQUEST['geslacht']);
-$email=$_REQUEST['email'];
-$telefoon=$_REQUEST['telefoon'];
-$mobiel=$_REQUEST['mobiel'];
-$school=mysql_real_escape_string($_REQUEST['school']);
-$pagina=$_REQUEST['pagina'];
-$login=$_REQUEST['login'];
-$password=$_REQUEST['password'];
-$password_check=$_REQUEST['password_check'];	
-$akkoord=$_REQUEST['akkoord'];
-$reg_akkoord=$_REQUEST['reg_akkoord'];
-$v_voornaam=$_REQUEST['v_voornaam'];
-$v_tussenvoegsel=$_REQUEST['v_tussenvoegsel'];
-$v_achternaam=$_REQUEST['v_achternaam'];
-$v_email=$_REQUEST['v_email'];
-$v_telefoon=$_REQUEST['v_telefoon'];
-$v_mobiel=$_REQUEST['v_mobiel'];
-
-
+$soort = $_REQUEST['soort'];
+$teamnaam = $_REQUEST['teamnaam'];
+$voornaam = $_REQUEST['voornaam'];
+$tussenvoegsel = $_REQUEST['tussenvoegsel'];
+$achternaam = $_REQUEST['achternaam'];
+$naam = $achternaam;
+$straat = $_REQUEST['straat'];
+$nummer = $_REQUEST['nummer'];
+$pc = $_REQUEST['pc'];
+$plaats = $_REQUEST['plaats'];
+$geb_dag = voorloop_nul($_REQUEST['geb_dag'],2);
+$geb_maand = voorloop_nul($_REQUEST['geb_maand'],2);
+$geb_jaar = $_REQUEST['geb_jaar'];
+$geslacht = $_REQUEST['geslacht'];
+$email = $_REQUEST['email'];
+$telefoon = $_REQUEST['telefoon'];
+$mobiel = $_REQUEST['mobiel'];
+$school = $_REQUEST['school'];
+$pagina = $_REQUEST['pagina'];
+$login = $_REQUEST['login'];
+$password = $_REQUEST['password'];
+$password_check = $_REQUEST['password_check'];
+$akkoord = $_REQUEST['akkoord'];
+$reg_akkoord = $_REQUEST['reg_akkoord'];
+$v_voornaam = $_REQUEST['v_voornaam'];
+$v_tussenvoegsel = $_REQUEST['v_tussenvoegsel'];
+$v_achternaam = $_REQUEST['v_achternaam'];
+$v_email = $_REQUEST['v_email'];
+$v_telefoon = $_REQUEST['v_telefoon'];
+$v_mobiel = $_REQUEST['v_mobiel'];
 
 switch ($do) {
 	case 'INLOGGEN':

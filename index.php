@@ -11,22 +11,17 @@ require_once('libs/is_email.php');
 $state = $_REQUEST['state'];
 $menu_id = strtolower($_REQUEST['mobile_menu_id']);
 
-if (!empty($menu_id))
-  {
+if (!empty($menu_id)) {
 	  $mr = db_row("select actie, extern from menu where id = '" . db_esc($menu_id) . "' and verwijderd != 'j' order by id asc");
 	  preg_match("/(state\=){1}([a-z]{1,})/",$mr[0],$matches);
 	  $state = $matches[2];
   }
 
-if (empty($state))
-	{ 
-	   if ($subdomein != 'dev')
-	 		{ 
+if (empty($state)) {
+	   if ($subdomein != 'dev') {
 			  $row = db_row("select waarde from system where parameter='default_state'");
 			  $state = $row[0];
-			}
-			else
-	 		{ 
+			} else {
 			  $row = db_row("select waarde from system where parameter='default_state_dev'");
 			  $state = $row[0];
 			}
@@ -69,11 +64,9 @@ if ($r = db_row("select id from beheerders where persoon='$user[id]' and actief=
 
 // rechten afhandelen
 $ok = true;
-if ($row[1] == 'j')
-  {
+if ($row[1] == 'j') {
 	$ok = false;
-	if ((!empty($user['id'])) and ($user['verbannen'] != 'j') and ($user['beheerder'] == 'j'))
-	  {
+	if ((!empty($user['id'])) and ($user['verbannen'] != 'j') and ($user['beheerder'] == 'j')) {
 		if (!empty($row[2])) {
 			$ok = ($rr = db_row("select id from rechten where user='$user[id]' and recht='$row[2]' and verwijderd!='j'"));
         } else {

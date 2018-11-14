@@ -4,13 +4,14 @@
     height: 20px;
     margin-right: 20px;
     box-sizing: border-box;
+    padding-top: 3px;
 }
 .button_text {
     float: left;
-    width: 82px;
+    width: 80px;
     text-align: center;
     box-sizing: border-box;
-    padding-top: 5px;
+    padding-top: 3px;
 }
 
 .button_rood, .button_rood_small {
@@ -42,6 +43,9 @@
     width: 132px;
     padding: 0px 5px 0px 5px;
     box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #FFFF66;
+    margin-bottom: 7px;
 }
 .button_paars_small, .button_rood_small {
     width: 90px;
