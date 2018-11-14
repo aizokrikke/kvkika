@@ -25,7 +25,7 @@ $message = $_REQUEST['message'];
 // paginagegevens ophalen
 $pagcode = utf8_decode($pag);
 $state = 'deelnemer';
-$pres=db_query("select personen.voornaam,
+$pres = db_query("select personen.voornaam,
 							personen.voorvoegsel,
 							personen.achternaam,
 							deelnemers.foto,

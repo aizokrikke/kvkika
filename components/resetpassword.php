@@ -1,19 +1,14 @@
 <?php 
-$s=4;
+$s = 4;
+$do = $_REQUEST['do'];
 
-$do=$_REQUEST['do'];
-
-
-if ($do=='herstellen')
-  {
-	$loginnaam=$_REQUEST['loginnaam'];
-	$email=$_REQUEST['email'];
+if ($do=='herstellen') {
+	$loginnaam = $_REQUEST['loginnaam'];
+	$email = $_REQUEST['email'];
 	
-	
-	if (!empty($loginnaam))
-	  {
+	if (!empty($loginnaam)) {
 		  $l=db_esc($loginnaam);
-		  if ($lr=db_row("select id,email, login from personen where login='$l' and verwijderd!='j'")) {
+		  if ($lr = db_row("select id,email, login from personen where login='$l' and verwijderd!='j'")) {
 		      // login gevonden dus password resetten
 			  $status = 'succes';
 			  $to = $lr[1];
@@ -38,7 +33,7 @@ if ($do=='herstellen')
 		      $fout[] = "geen geldige login of emailadres opgegeven";
 		  }
 	  }
-	if ($status=='succes') {
+	if ($status == 'succes') {
 		  $pass = generate_password();
 		  $pass_md5 = md5($pass);
 		  db_query("update personen set password_md5='$pass_md5' where id = '$id'");

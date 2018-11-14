@@ -12,136 +12,139 @@
 // versie 2.0.0 (1 juni 2013)
 // - toevoegen deelnemerfoto's toegevoegd
 
-$act=$_REQUEST['act'];
-$do=$_REQUEST['do'];
-$id=$_REQUEST['id'];
-$anu=$_REQUEST['anu'];
-$anu2=$_REQUEST['anu2'];
+$act = $_REQUEST['act'];
+$do = $_REQUEST['do'];
+$id = $_REQUEST['id'];
+$anu = $_REQUEST['anu'];
+$anu2 = $_REQUEST['anu2'];
 
-if ($anu=='terug') { $act='lijst'; }
-if ($anu2=='terug') { $act=''; }
+if ($anu == 'terug') {
+    $act='lijst';
+}
+if ($anu2 == 'terug') {
+    $act='';
+}
 
 switch ($do) {
   case 'uploaden':
 	  
 	switch ($act) {
 		case 'foto':
-			if (file_exists("$siteroot/beheer/tmp/temp.jpg")) { unlink("$siteroot/beheer/tmp/temp.jpg");}
+			if (file_exists("$siteroot/beheer/tmp/temp.jpg")) {
+			    unlink("$siteroot/beheer/tmp/temp.jpg");
+			}
 			$tmp_name = $_FILES["foto"]["tmp_name"];
 			$naam = $_FILES["foto"]["name"];
-			if (move_uploaded_file($tmp_name, "$siteroot/beheer/tmp/temp.jpg"))
-			  {
+			if (move_uploaded_file($tmp_name, "$siteroot/beheer/tmp/temp.jpg")) {
 				list($width, $height, $type, $attr) = getimagesize("$siteroot/beheer/tmp/temp.jpg");
 				
-				$factor=$width/$height;
-				$nw=550;
-				$nh=round($nw/$factor,0);
+				$factor = $width/$height;
+				$nw = 550;
+				$nh = round($nw/$factor,0);
 				
-				$im_out=imagecreatetruecolor($nw,$nh);
-				$im_in=imagecreatefromjpeg("$siteroot/beheer/tmp/temp.jpg");
+				$im_out = imagecreatetruecolor($nw,$nh);
+				$im_in = imagecreatefromjpeg("$siteroot/beheer/tmp/temp.jpg");
 				
-				imagecopyresampled($im_out,$im_in,0,0,0,0,$nw,$nh,$width,$height);
+				imagecopyresampled($im_out,$im_in,0,0,0,0, $nw, $nh, $width, $height);
 				imagejpeg($im_out,"$siteroot/fotos/26mei/$naam",90);
 				imagedestroy($im_out);
 				imagedestroy($im_in);
 				
-				mysql_query("insert into deelnemer_foto (deelnemer,naam, besteld) values ('".mysql_real_escape_string($id)."','$naam','n')") or die(mysql_error());
-			  } 
-			  else
-			  { echo "bestand uploaden mislukt<br><br>"; }
-			$act='';	
+				db_query("insert into deelnemer_foto (deelnemer,naam, besteld) values ('" . db_esc($id) . "', '$naam','n')");
+			  } else {
+			    echo "bestand uploaden mislukt<br><br>";
+			}
+			$act = '';
 		break;
-		
-
-		
-	  } // switch
+	  }
 	break;
 	
 	case 'opslaan':
 	  switch ($act) {
 		case 'edit':  
-			$pw1=$_REQUEST['pw1'];
-			$pw2=$_REQUEST['pw2'];
-			$voornaam=$_REQUEST['voornaam'];
-			$voorvoegsel=$_REQUEST['voorvoegsel'];
-			$achternaam=$_REQUEST['achternaam'];
-			$adres=$_REQUEST['adres'];
-			$adres_nr=$_REQUEST['adres_nr'];
-			$plaats=$_REQUEST['plaats'];
-			$postcode=$_REQUEST['postcode'];
-			$deelnemerlogin=$_REQUEST['deelnemerlogin'];
-			$school=$_REQUEST['school'];
-			$persoon_id=$_REQUEST['persoon_id'];
-			$pagina=$_REQUEST['pagina'];
-			$passmd5=md5($pw1);
-			$loginmd5=md5($deelnemerlogin);
-			$email=$_REQUEST['email'];
+			$pw1 = $_REQUEST['pw1'];
+			$pw2 = $_REQUEST['pw2'];
+			$voornaam = $_REQUEST['voornaam'];
+			$voorvoegsel = $_REQUEST['voorvoegsel'];
+			$achternaam = $_REQUEST['achternaam'];
+			$adres = $_REQUEST['adres'];
+			$adres_nr = $_REQUEST['adres_nr'];
+			$plaats = $_REQUEST['plaats'];
+			$postcode = $_REQUEST['postcode'];
+			$deelnemerlogin = $_REQUEST['deelnemerlogin'];
+			$school = $_REQUEST['school'];
+			$persoon_id = $_REQUEST['persoon_id'];
+			$pagina = $_REQUEST['pagina'];
+			$passmd5 = md5($pw1);
+			$loginmd5 = md5($deelnemerlogin);
+			$email = $_REQUEST['email'];
 			
-			if (!empty($pw1))
-			  { if ($pw1!=$pw2)
-				{ $err[]="Wachtwoorden zijn niet gelijk"; }
-			  }
-			  else
-			  { 
-				$r=mysql_fetch_row(mysql_query("select password_md5 from personen where id='".mysql_real_escape_string($persoon_id)."' and verwijderd!='j'"));
-				$passmd5=$r[0];
+			if (!empty($pw1)) {
+			    if ($pw1 != $pw2) {
+			        $err[] = "Wachtwoorden zijn niet gelijk";
+			    }
+			  } else {
+				$r = db_row("select password_md5 from personen where id='".mysql_real_escape_string($persoon_id)."' and verwijderd!='j'");
+				$passmd5 = $r[0];
 			  }
 		  
-			if (mysql_fetch_row(mysql_query("select id from personen where login='".mysql_real_escape_string($deelnemerlogin)."' and id!='".mysql_real_escape_string($persoon_id)."' and verwijderd!='j'")))
-				{ $err[]="Login is al in gebruik"; }  
+			if (db_row("select id from personen where login='" . db_row($deelnemerlogin) . "' and id!='" . db_row($persoon_id) . "' and verwijderd != 'j'")) {
+			    $err[] = "Login is al in gebruik";
+			}
 				
-			if (empty($err))
-			  {
+			if (empty($err)) {
 				//echo "deelnemer_id: $id<br>";
-				
-				mysql_query("update deelnemers set school='".mysql_real_escape_string($school)."',pagina='".mysql_real_escape_string($pagina)."' where id='".mysql_real_escape_string($id)."'") or die(mysql_error());
+				db_query("update deelnemers set school='" . db_esc($school) . "',pagina='" . db_esc($pagina) . "' where id = '" . db_esc($id) . "'");
 				//echo "persoon_id: $persoon_id<br>";
-				mysql_query("update personen set voornaam='".mysql_real_escape_string($voornaam)."', voorvoegsel='".mysql_real_escape_string($voorvoegsel)."', achternaam='".mysql_real_escape_string($achternaam)."', email='".mysql_real_escape_string($email)."', login='".mysql_real_escape_string($deelnemerlogin)."', login_md5='$loginmd5', password_md5='$passmd5', adres='".mysql_real_escape_string($adres)."',adres_nr='".mysql_real_escape_string($adres_nr)."',postcode='".mysql_real_escape_string($postcode)."',plaats='".mysql_real_escape_string($plaats)."' where id='".mysql_real_escape_string($persoon_id)."'") or die(mysql_error());
-				$act='lijst';    
+				db_query("update personen set voornaam='" . db_esc($voornaam) . "', voorvoegsel ='" . db_esc($voorvoegsel) . "', achternaam='" .
+                    db_esc($achternaam) . "', email = '" . db_esc($email)."', login = '".db_esc($deelnemerlogin) . "', login_md5 = '$loginmd5', 
+                    password_md5 = '$passmd5', adres = '" . db_esc($adres)."', adres_nr = '" . db_esc($adres_nr) . "',postcode = '" .
+                    db_esc($postcode)."',plaats = '" . db_esc($plaats) . "' where id = '" . db_esc($persoon_id) . "'");
+				$act = 'lijst';
 			  }
 		break;
 		
 		case 'editschool';
 		case 'addschool':
-			$naam=$_REQUEST['naam'];
-			$adres=$_REQUEST['adres'];
-			$nr=$_REQUEST['nr'];
-			$postcode=$_REQUEST['postcode'];
-			$plaats=$_REQUEST['plaats'];
+			$naam = $_REQUEST['naam'];
+			$adres = $_REQUEST['adres'];
+			$nr = $_REQUEST['nr'];
+			$postcode = $_REQUEST['postcode'];
+			$plaats = $_REQUEST['plaats'];
 			
-			if (empty($naam))
-			  { $err[]="Geen naam ingevoerd"; }
-			if (empty($err))
-			  {
-			  	if ($act!='addschool')
-				  {
-					  mysql_query("update scholen set naam='".mysql_real_escape_string($naam)."', straat='".mysql_real_escape_string($adres)."', nr='".mysql_real_escape_string($nr)."', postcode='".mysql_real_escape_string($postcode)."', plaats='".mysql_real_escape_string($plaats)."' where id='".mysql_real_escape_string($id)."'") or die(mysql_error());
+			if (empty($naam)) {
+			    $err[]="Geen naam ingevoerd";
+			}
+			if (empty($err)) {
+			  	if ($act != 'addschool') {
+					  db_query("update scholen set naam ='" . db_esc($naam) . "', straat = '" . db_esc($adres) . "', nr = '" .
+                          db_esc($nr) . "', postcode = '" . db_esc($postcode) . "', plaats = '" . db_esc($plaats) . "' where id = '" .
+                          db_esc($id)."'");
+				  } else {
+					  db_esc_query("insert into scholen (naam, straat, nr, postcode, plaats) values ('" . db_esc($naam) . "','" .
+                          db_esc($adres) . "','" . db_esc($nr) . "','" . db_esc($postcode) . "','" . db_esc($plaats) . "')");
 				  }
-				  else
-				  {
-					  mysql_query("insert into scholen (naam, straat, nr, postcode, plaats) values ('".mysql_real_escape_string($naam)."','".mysql_real_escape_string($adres)."','".mysql_real_escape_string($nr)."','".mysql_real_escape_string($postcode)."','".mysql_real_escape_string($plaats)."')") or die (mysql_error()); 
-				  }
-				$act='';  
+				$act = '';
 			  }
 		break;
 		
-	  } // switch
+	  }
 	break;
 	
 	case 'verwijder':
-		mysql_query("update deelnemers set verwijderd='j' where id='".mysql_real_escape_string($id)."'") or die(mysql_error());
-		$act='';
-		$id='';
+		db_query("update deelnemers set verwijderd = 'j' where id = '" . db_esc($id) . "'");
+		$act = '';
+		$id = '';
 	break;
-	
-  } // switch
+  }
   
   
-  if (!empty($err))
-    {
-		echo "<br><br>";
-		foreach ($err as $val) { echo $val."<br>"; }
-	}
+if (!empty($err)) {
+    echo "<br><br>";
+    foreach ($err as $val) {
+        echo $val."<br>";
+    }
+}
   
 // einde verwerking formulieren  
   

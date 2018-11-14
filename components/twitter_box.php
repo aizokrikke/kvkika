@@ -69,8 +69,7 @@ foreach ($r->statuses as $key=>$rec)
 	  }	// foreach
 	arsort($s); 
 	//print_r($s);
-	foreach ($s as $val)
-	  { 
+	foreach ($s as $val) {
 //	  	print_r($val); echo "<br>";
 	  	$tail = substr($t, $val['end'],strlen($t) - $val['end']);
 		$t = substr($t,0, $val['start']) . $val['replace'] . $tail;
