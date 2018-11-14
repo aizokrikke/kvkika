@@ -3,7 +3,7 @@ require('libs/connect.php');
 require('logon/check_logon.php');
 require('libs/tools.php');
 require('libs/php-iban/php-iban.php');
-require('libs/is_email.php'); 
+require('libs/is_email.php');
 
 //variablen afvangen
 $pag = strtolower($_REQUEST['pag']);
@@ -47,8 +47,8 @@ $pres=db_query("select personen.voornaam,
 								deelnemers.persoon = personen.id and 
 								deelnemers.verwijderd != 'j' and
 								deelnemers.bevestigd != 'n'");
-if ($pr=db_row($pres)) {
-    if ($pr[8]=='j') {
+if ($pr = db_row($pres)) {
+    if ($pr[8] == 'j') {
     $pagina['deelnemer'] = $pr[0];
     if ($pr[15] != 'estafette') {
         if (!empty($pr[1])) {
@@ -71,7 +71,7 @@ if ($pr=db_row($pres)) {
     $pagina['show_stand'] = $pr[7];
     $pagina['gebdatum'] = $pr[9];
     $pagina['plaats'] = $pr[10];
-    $sr = db_row("select naam from scholen where id='$pr[11]'");
+    $sr = db_row("select naam from scholen where id = '$pr[11]'");
     $pagina['school_id'] = $pr[11];
     $pagina['school'] = stripslashes($sr[0]);
     $pagina['id'] = $pr[12];

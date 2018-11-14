@@ -2,7 +2,7 @@
 <html>
 <head  prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# 
                article: http://ogp.me/ns/article#">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>DE BERG OP | Kinderen voor KiKa</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 

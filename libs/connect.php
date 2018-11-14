@@ -4,6 +4,7 @@
 
     function connect($db_server,$db_username,$db_password, $db_name) {
         $mysqli = new mysqli($db_server, $db_username, $db_password, $db_name);
+        $mysqli->set_charset("utf8");
         if ($mysqli->connect_error) {
             Echo "Website is unavailable.\n\n";
             echo "Error: Failed to make a MySQL connection, here is why: \n";
