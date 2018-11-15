@@ -149,57 +149,60 @@ if (!empty($err)) {
 // einde verwerking formulieren  
   
 ?>
-<span class="kop"><a href="?state=<?php echo $state;?>&go=<?php echo $go; ?>"><img src="beheer/img/Basic_set2_Png/Basic_set2_Png/user4_48.png" align="absmiddle" title="beheerders" alt="beheerders" align="absmiddle" height="24" width="24"> Deelnemers</a></span>
+<span class="kop"><a href="?state=<?php echo $state;?>&go=<?php echo $go; ?>"><i class="fas fa-users fa-sm fa-fw"></i> Deelnemers</a></span>
 <hr />
 <?php  
   
 switch ($act) {
 	default:
-		$r=mysql_fetch_row(mysql_query("select count(id) from deelnemers where verwijderd!='j'"));
+		$r = db_row("select count(id) from deelnemers where verwijderd != 'j'");
 		?><br><br>
-        <a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&act=foto"><img src="img/24x24/edit_add.png" align="absmiddle" width="24" height="24"> deelnemerfoto's toevoegen</a>
+        <a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&act=foto"><i class="fas fa-plus-circle fa-lg fa-fw"></i> deelnemerfoto's toevoegen</a>
         <br><br>
-        <a href="beheer/workers/deelnemersexport.php"><img src="beheer/img/excel.png" width="24" height="24" alt="export naar excel" title="export naar excel" align="absmiddle" /> exporteren naar Excel</a>
+        <a href="beheer/workers/deelnemersexport.php"><i class="far fa-file-excel fa-lg fa-fw"></i> exporteren naar Excel</a>
 		<br><br><br>
 		<table>
-		<tr height="28"><td>Aantal <a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=lijst">deelnemers</a></td><td width="10"></td><td><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=lijst"><?php echo $r[0]; ?> <img src="img/Basic_set2_Png/Basic_set2_Png/user4_48.png" width="18" height="18" align="absmiddle" alt="deelnemers bewerken" title="deelnemers bewerken"></a></td></tr>
+		<tr height="28"><td>Aantal <a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=lijst">deelnemers</a></td><td width="10"></td><td><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=lijst"><?php echo $r[0]; ?> <i class="fas fa-user-edit fa-sm fa-fw"></i></a></td></tr>
 		<?php
-		$r=mysql_fetch_row(mysql_query("select count(id) from deelnemers where verwijderd!='j' and bevestigd='j'"));?>
+		$r = db_row("select count(id) from deelnemers where verwijderd != 'j' and bevestigd = 'j'");?>
 		<tr valign="top" height="28"><td>Aantal deelnemers<br>
 		<em>(afgeronde inschrijving)</em></td><td width="10"></td><td><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&act=lijst"><?php echo $r[0]; ?></a></td></tr>
 		<?php
-		$r=mysql_fetch_row(mysql_query("select sum(bedrag) from sponsoring where verwijderd!='j'"));
+		$r = db_row("select sum(bedrag) from sponsoring where verwijderd != 'j'");
 		?>
         <tr height="28"><td colspan="2">&nbsp;</td></tr>
 		<tr height="28"><td>Sponsorbedrag</td><td width="10"></td><td><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&act=lijst">&euro; <?php echo number_format($r[0],2,',','.'); ?></a></td></tr>
         <?php if (!empty($user['rechten']['incasso'])) {?>
-        <tr height="28"><td></td><td ></td><td><a href="beheer/workers/deelnemersexport.php?do=incasso"><img src="beheer/img/excel.png" width="24" height="24" alt="incassobestand" title="incassobestand" align="absmiddle" /> incassobestand</a></td></tr>
+        <tr height="28"><td></td><td ></td><td><a href="beheer/workers/deelnemersexport.php?do=incasso"><i class="far fa-file-excel fa-lg fa-fw"></i> incassobestand</a></td></tr>
         <?php } ?>
 		<tr height="28"><td colspan="3">&nbsp;</td></tr>
 		
 		<?php
-		$res=mysql_query("select scholen.naam, count(deelnemers.id), scholen.id from deelnemers left join scholen on scholen.id=deelnemers.school where deelnemers.verwijderd!='j' group by scholen.id order by count(deelnemers.id) DESC") or die(mysql_error());
+		$res = db_query("select scholen.naam, count(deelnemers.id), scholen.id from deelnemers left join scholen on scholen.id=deelnemers.school where deelnemers.verwijderd!='j' group by scholen.id order by count(deelnemers.id) DESC");
 		
-		while ($r=mysql_fetch_row($res))
+		while ($r = db_row($res))
 		  {
 		?>
-		<tr height="28"><td><?php if (!empty($r[0])) { ?><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=editschool&id=<?php echo $r[2]; ?>"><?php echo stripslashes($r[0]); ?> <img src="img/Basic_set2_Png/Basic_set2_Png/document_pencil_48.png" alt="bewerken" title="bewerken" align="absmiddle" height="18" width="18"></a><?php } else { echo '-- ongekoppeld --'; }?></td><td width="10"></td><td><?php echo $r[1]; ?></td></tr>
+		<tr height="28"><td><?php if (!empty($r[0])) {
+		    ?><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=editschool&id=<?php echo $r[2]; ?>"><i class="far fa-edit fa-sm fa-fw"></i> <?php echo stripslashes($r[0]); ?></a><?php
+		} else {
+		    echo '-- ongekoppeld --'; }?></td><td width="10"></td><td><?php echo $r[1]; ?></td></tr>
 		<?php	   
 		  }
 	
 		// scholen zonder deelnemers
 	
-		$res=mysql_query("select scholen.naam, scholen.id from scholen where NOT EXISTS(select id from deelnemers where verwijderd!='j' and deelnemers.school=scholen.id) order by scholen.naam DESC") or die(mysql_error());
+		$res = db_query("select scholen.naam, scholen.id from scholen where NOT EXISTS(select id from deelnemers where verwijderd!='j' and deelnemers.school=scholen.id) order by scholen.naam DESC") or die(mysql_error());
 		
-		while ($r=mysql_fetch_row($res))
+		while ($r = db_row($res))
 		  {
 		?>
-		<tr><td><?php if (!empty($r[0])) { ?><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=editschool&id=<?php echo $r[1]; ?>"><?php echo $r[0]; ?> <img src="img/Basic_set2_Png/Basic_set2_Png/document_pencil_48.png" alt="bewerken" title="bewerken" align="absmiddle" height="18" width="18"></a><?php } else { echo '-- ongekoppeld --'; }?></td><td width="10"></td><td>0</td></tr>
+		<tr><td><?php if (!empty($r[0])) { ?><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=editschool&id=<?php echo $r[1]; ?>"><i class="far fa-edit fa-sm fa-fw"></i> <?php echo $r[0]; ?></a><?php } else { echo '-- ongekoppeld --'; }?></td><td width="10"></td><td>0</td></tr>
 		<?php	   
 		  }
 		?>        
 		</table>  <br><br>
-        <a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=addschool"><img src="img/24x24/edit_add.png" width="24" hieght="24" align="absmiddle"> school toevoegen</a>
+        <a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=addschool"><i class="fas fa-plus-circle fa-lg fa-fw"></i> school toevoegen</a>
 <?php
 	break;
 	
