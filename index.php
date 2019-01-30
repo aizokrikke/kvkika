@@ -13,7 +13,7 @@ $menu_id = strtolower($_REQUEST['mobile_menu_id']);
 
 if (!empty($menu_id)) {
 	  $mr = db_row("select actie, extern from menu where id = '" . db_esc($menu_id) . "' and verwijderd != 'j' order by id asc");
-	  preg_match("/(state\=){1}([a-z]{1,})/",$mr[0],$matches);
+	  preg_match("/(state\=){1}([a-z]{1,})/", $mr[0],$matches);
 	  $state = $matches[2];
   }
 
@@ -43,20 +43,20 @@ if (!empty($pag)) {
 }
 
 // state opvolgen	
-$row = db_row("select incl, beheerder, recht, content_id from states where state='$state' and site='$subdomein' and verwijderd!='j'");
+$row = db_row("select incl, beheerder, recht, content_id from states where state = '$state' and site = '$subdomein' and verwijderd != 'j'");
 if (empty($row[0])) {
     if ($subdomein != 'dev') {
-     $row = db_row("select waarde from system where parameter='default_state'");
+     $row = db_row("select waarde from system where parameter = 'default_state'");
      $state = $row[0];
     } else {
-     $row = db_row("select waarde from system where parameter='default_state_dev'");
+     $row = db_row("select waarde from system where parameter = 'default_state_dev'");
      $state = $row[0];
     }
-    $row = db_row("select incl, beheerder, recht, content_id from states where state='$state' and site='$subdomein' and verwijderd!='j'");
+    $row = db_row("select incl, beheerder, recht, content_id from states where state = '$state' and site = '$subdomein' and verwijderd != 'j'");
 }
 
 // beheerder?
-if ($r = db_row("select id from beheerders where persoon='$user[id]' and actief='j' and verwijderd!='j'")) {
+if ($r = db_row("select id from beheerders where persoon = '$user[id]' and actief = 'j' and verwijderd != 'j'")) {
     $user['beheerder'] = 'j';
 } else {
     $user['beheerder'] = 'n';

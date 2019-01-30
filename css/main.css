@@ -1121,3 +1121,12 @@ tr.listrow_confirmed_1, tr.listrow_confirmed_2, tr.listrow_not_confirmed_1, tr.l
 .tijd { width: 15%; }
 .onderwerp { width: 15%; }
 .mailbody { width: 40%; }
+
+
+.selected {
+    color: #030303;
+}
+
+.unselected {
+    color: #DADADA;
+}

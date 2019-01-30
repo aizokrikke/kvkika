@@ -94,7 +94,7 @@ if ($act == 'flip_actief')
 	<table>
     	<tr valign="top"><td></td><td></td><td></td><td><small>actief</small></td>
 <?php $res = db_query("select recht from rechtendef order by id");
-	  while ($row = db_fetch_row($res)) {
+	  while ($row = db_row($res)) {
 	      ?><td width="55" align="center"><small><?php echo $row[0]; ?></small></td><?php
 	  } ?>
         </tr>
@@ -104,8 +104,8 @@ if ($act == 'flip_actief')
 	while ($row = db_row($res)) {
 ?>
 	<tr>
-    	<td width="30"><a href="?state=admin&go=admin&act=edit&id=<?php echo $row[5]; ?>"><img src="beheer/img/eleganticons-png/png/Pencil.png"width="24" height="24" alt="bewerken" title="bewerken"></a></td>
-        <td width="30"><a href="?state=admin&go=beheerders&act=del&id=<?php echo $row[5]; ?>"><img src="beheer/img/eleganticons-png/png/X.png" width="24" height="24" alt="verwijderen" title="verwijderen"></a></td>
+    	<td width="30"><a href="?state=admin&go=beheerders&act=edit&id=<?php echo $row[5]; ?>"><i class="fas fa-user-edit"></i></a></td>
+        <td width="30"><a href="?state=admin&go=beheerders&act=del&id=<?php echo $row[5]; ?>"><i class="far fa-trash-alt"></i></a></td>
     	<td width="200"><a href="?state=admin&go=beheerders&act=edit&id=<?php echo $row[5]; ?>">
 		<?php echo $row[1]; 
 		if (!empty($row[2])) {
@@ -114,16 +114,17 @@ if ($act == 'flip_actief')
 		if (!empty($row[3])) {
 		    echo " $row[3]";
 		}?></a></td>
-    	<td width="50"><a href="?state=admin&go=beheerders&act=flip_actief&id=<?php echo $row[5]; ?>"><img src="beheer/img/eleganticons-png/png/Checkmark<?php if ($row[4]!='j') { echo "_inactive"; } ?>.png" width="24" height="24" <?php if ($row[4]=='j') { ?> alt="actief" title="actief"<?php } else { ?> alt="inactief" title="inactief"<?php } ?>></a></td>
+        <td width="50"><a href="?state=admin&go=beheerders&act=flip_actief&id=<?php echo $row[5]; ?>"><i class="fas fa-check-circle <?php if ($row[4] != 'j') { echo "un"; } ?>selected" title="actief" ></i></a></td>
 <?php
         $rres = db_query("select id, recht, beschrijving from rechtendef order by id");
 		while ($rrow = db_row($rres)) { ?>
-          <td align="center"><a href="javascript:void();" onClick="do_flipRecht(<?php echo $row[5]; ?>,<?php echo $rrow[0]; ?>);"><?php			  
-			  if (user_has_right($row[5],$rrow[0])) {
-			      ?><img src="beheer/img/eleganticons-png/png/Checkmark.png" title="<?php echo $rrow[2]; ?>" alt="<?php echo $rrow[2]; ?>" width="24" height="24"><?php
-			  } else {
-			      ?><img src="beheer/img/eleganticons-png/png/Checkmark_inactive.png" alt="<?php echo $rrow[2]; ?>" title="<?php echo $rrow[2]; ?>" width="24" height="24"><?php
-			  } ?></a>
+          <td align="center"><a href="javascript:void();" onClick="do_flipRecht(<?php echo $row[5]; ?>,<?php echo $rrow[0]; ?>);">
+            <i class="fas fa-check-circle <?php
+            if (user_has_right($row[5], $rrow[0])) {?>
+                selected <?php
+            } else {?>
+                unselected <?php
+            } ?>" title="<?php echo $rrow[2]; ?>"></i></a>
    		  </td>
 <?php 
 		  }
@@ -134,7 +135,7 @@ if ($act == 'flip_actief')
 ?>
 	</table>
     <br /><br />
-    <a href="?state=admin&go=beheerders&act=new"><img src="beheer/img/beheerder.png" align="absmiddle" height="16" width="16"> Nieuwe beheerder toevoegen</a>
+    <a href="?state=admin&go=beheerders&act=new"><i class="fas fa-plus-circle"></i> Nieuwe beheerder toevoegen</a>
     
 <?php
 	  } else {

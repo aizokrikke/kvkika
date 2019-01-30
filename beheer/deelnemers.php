@@ -208,29 +208,29 @@ switch ($act) {
 	
 	case 'edit';
 	case 'del':
-		if ($opnieuw!='j')
-		  {
-			if (!$r=mysql_fetch_row(mysql_query("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.geslacht, personen.login, personen.adres, personen.adres_nr, personen.postcode, personen.plaats, deelnemers.pagina, deelnemers.school, personen.email from personen, deelnemers where deelnemers.persoon=personen.id and deelnemers.id='".mysql_real_escape_string($id)."' and personen.verwijderd!='j' and deelnemers.verwijderd!='j'")))
-			{ $err[]="Deelnemer niet gevonden..."; }
-			else
-			{	$persoon_id=$r[0];
-				$voornaam=$r[1];
-				$voorvoegsel=$r[2];
-				$achternaam=$r[3];
-				$geslacht=$r[4];
-				$deelnemerlogin=$r[5];
-				$adres=$r[6];
-				$adres_nr=$r[7];
-				$postcode=$r[8];
-				$plaats=$r[9];
-				$pagina=$r[10];
-				$school=$r[11];
-				$email=$r[12];
+		if ($opnieuw != 'j') {
+			if (!$r = DB_ROW("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.geslacht, personen.login, personen.adres, personen.adres_nr, personen.postcode, personen.plaats, deelnemers.pagina, deelnemers.school, personen.email from personen, deelnemers 
+                                  where deelnemers.persoon=personen.id and deelnemers.id='" . DB_ESC($id) . "' and personen.verwijderd != 'j' and deelnemers.verwijderd != 'j'"))
+			{
+			    $err[] = "Deelnemer niet gevonden...";
+			} else {
+			    $persoon_id = $r[0];
+				$voornaam = $r[1];
+				$voorvoegsel = $r[2];
+				$achternaam = $r[3];
+				$geslacht = $r[4];
+				$deelnemerlogin = $r[5];
+				$adres = $r[6];
+				$adres_nr = $r[7];
+				$postcode = $r[8];
+				$plaats = $r[9];
+				$pagina = $r[10];
+				$school = $r[11];
+				$email = $r[12];
 			}
 		  }
 		  
-	if (empty($err))
-	  {	  
+	if (empty($err)) {
 ?>			
 <form action="?" method="post">
     <input type="hidden" name="state" value="<?php echo $state; ?>"> 
@@ -268,11 +268,13 @@ switch ($act) {
         	<select name="school">
             	<option value="0"></option>
 <?php
-			$sres=mysql_query("select id, naam from scholen where verwijderd!='j' order by naam");
-			while ($sr=mysql_fetch_row($sres))
-			  {
+			$sres = db_query("select id, naam from scholen where verwijderd != 'j' order by naam");
+			while ($sr = db_row($sres)) {
 ?>
-				<option value="<?php echo $sr[0]; ?>" <?php if ($sr[0]==$school) { ?>selected<?php } ?>><?php echo $sr[1]; ?></option>
+				<option value="<?php echo $sr[0]; ?>" <?php
+                if ($sr[0] == $school) {
+				    ?>selected<?php
+				} ?>><?php echo $sr[1]; ?></option>
 <?php				  
 			  } // while
 ?>                
@@ -284,12 +286,16 @@ switch ($act) {
         <tr><td>Wachtwoord</td><td><input type="password" size="40" name="pw1"> <em>laat leeg om wachtwoord ongewijzigd te laten</em></td></tr>    
         <tr><td>Herhaal Wachtwoord</td><td><input type="password" size="40" name="pw2"></td></tr>    
     </table><br>
-    <?php if ($act=='del')
-	  {  
+    <?php if ($act == 'del') {
 	?>
     Echt verwijderen?<br><br>
     <?php } ?>	  
-    <input type="submit" name="anu" value="terug"> <input type="submit" name="do" value="<?php if ($act=='del') { ?>verwijder<?php } else { ?>opslaan<?php } ?>">    
+    <input type="submit" name="anu" value="terug"> <input type="submit" name="do" value="<?php
+    if ($act == 'del') {
+        ?>verwijder<?php
+    } else {
+        ?>opslaan<?php
+    } ?>">
 </form>    
 <?php   
 	  }
@@ -297,26 +303,20 @@ switch ($act) {
 	
 	case 'editschool';
 	case 'addschool':
-		if ($opnieuw!='j')
-		  {
-			if ($act!='addschool')
-			  {
-				if ($r=mysql_fetch_row(mysql_query("select id, naam, straat, nr, postcode, plaats from scholen where id='".mysql_real_escape_string($id)."' and verwijderd!='j'")))
-				{
-					$naam=$r[1];
-					$straat=$r[2];
-					$nr=$r[3];
-					$postcode=$r[4];
-					$plaats=$r[5];
-				}
-				else
-				{ 
-					$err[]='School niet gevonden';
+		if ($opnieuw != 'j') {
+			if ($act != 'addschool') {
+				if ($r = db_row("select id, naam, straat, nr, postcode, plaats from scholen where id='" . db_esc($id) . "' and verwijderd != 'j'")) {
+					$naam = $r[1];
+					$straat = $r[2];
+					$nr = $r[3];
+					$postcode = $r[4];
+					$plaats = $r[5];
+				} else {
+					$err[] = 'School niet gevonden';
 				}
 			  }
 		  }
-		if (empty($err))
-		  {
+		if (empty($err)) {
 ?>
 <form action="?" method="post">
     <input type="hidden" name="state" value="<?php echo $state; ?>"> 
@@ -340,39 +340,47 @@ switch ($act) {
 	
 		
 	case 'resendconfirmation':
-		if (!$r=mysql_fetch_row(mysql_query("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.geslacht, deelnemers.confirmcode, personen.email from personen, deelnemers where deelnemers.persoon=personen.id and deelnemers.id='".mysql_real_escape_string($id)."' and personen.verwijderd!='j' and deelnemers.verwijderd!='j'")))
-			{ $err[]="Deelnemer niet gevonden..."; }
-			else
-			{	$persoon_id=$r[0];
-				$voornaam=$r[1];
-				$tussenvoegsel=$r[2];
-				$achternaam=$r[3];
-			 	$naam=$achternaam;
-			    if (!empty($tussenvoegsel)) { $naam=$tussenvoegsel." ".$naam; }
-				if (!empty($voornaam)) { $naam=$voornaam." ".$naam; }	
-				$geslacht=$r[4];
-				$code=$r[5];
-				$email=$r[6];
+		if (!$r = db_row("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.geslacht, deelnemers.confirmcode, personen.email from personen, deelnemers where deelnemers.persoon=personen.id and deelnemers.id='" .
+            db_esc($id) . "' and personen.verwijderd != 'j' and deelnemers.verwijderd != 'j'"))	{
+		    $err[]="Deelnemer niet gevonden...";
+		} else {
+		    $persoon_id = $r[0];
+            $voornaam = $r[1];
+            $tussenvoegsel = $r[2];
+            $achternaam = $r[3];
+            $naam = $achternaam;
+            if (!empty($tussenvoegsel)) {
+                $naam = $tussenvoegsel . " " . $naam;
+            }
+            if (!empty($voornaam)) {
+                $naam = $voornaam . " " . $naam;
+            }
+            $geslacht = $r[4];
+            $code = $r[5];
+            $email = $r[6];
+        }
+		if (!$r = db_row("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.email from personen, verzorgers 
+                            where verzorgers.verzorger=personen.id and verzorgers.deelnemer='" . db_esc($id) . "' and personen.verwijderd != 'j' and verzorgers.verwijderd != 'j'")) {
+		    $err[] = "Ouder niet gevonden...";
+		} else {
+			$v_voornaam = $r[1];
+			$v_tussenvoegsel = $r[2];
+			$v_achternaam = $r[3];
+			$v_naam = $v_achternaam;
+			if (!empty($v_tussenvoegsel)) {
+			    $v_naam = $v_tussenvoegsel . " " . $v_naam;
 			}
-		if (!$r=mysql_fetch_row(mysql_query("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.email from personen, verzorgers where verzorgers.verzorger=personen.id and verzorgers.deelnemer='".mysql_real_escape_string($id)."' and personen.verwijderd!='j' and verzorgers.verwijderd!='j'")))
-		{ $err[]="Ouder niet gevonden..."; }
-		else
-		{ 
-			$v_voornaam=$r[1];
-			$v_tussenvoegsel=$r[2];
-			$v_achternaam=$r[3];
-			$v_naam=$v_achternaam;
-			if (!empty($v_tussenvoegsel)) { $v_naam=$v_tussenvoegsel." ".$v_naam; }
-			if (!empty($v_voornaam)) { $v_naam=$v_voornaam." ".$v_naam; }
-			$v_email=$r[4];		
+			if (!empty($v_voornaam)) {
+			    $v_naam = $v_voornaam . " " . $v_naam;
+			}
+			$v_email = $r[4];
 		}
-		if (empty($err))
-		{ 
-			$p['kind']=$naam;
-			$p['oudermail']=$v_email;
-			$p['code']=$code;
-			$p['geslacht']=$geslacht;
-			$p['ouder']=$v_naam;
+		if (empty($err)) {
+			$p['kind'] = $naam;
+			$p['oudermail'] = $v_email;
+			$p['code'] = $code;
+			$p['geslacht'] = $geslacht;
+			$p['ouder'] = $v_naam;
 			verstuur_bevestiging($p);
 ?>
 	De bevestiging is opnieuw verstuurd.<br><br>
@@ -384,23 +392,27 @@ switch ($act) {
 
 				
 	case 'confirm':
-		if (!$r=mysql_fetch_row(mysql_query("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.geslacht, deelnemers.confirmcode, personen.email from personen, deelnemers where deelnemers.persoon=personen.id and deelnemers.id='".mysql_real_escape_string($id)."' and personen.verwijderd!='j' and deelnemers.verwijderd!='j'")))
-			{ $err[]="Deelnemer niet gevonden..."; }
-			else
-			{	$persoon_id=$r[0];
-				$voornaam=$r[1];
-				$tussenvoegsel=$r[2];
-				$achternaam=$r[3];
-			 	$naam=$achternaam;
-			    if (!empty($tussenvoegsel)) { $naam=$tussenvoegsel." ".$naam; }
-				if (!empty($voornaam)) { $naam=$voornaam." ".$naam; }	
-				$geslacht=$r[4];
-				$code=$r[5];
-				$email=$r[6];
+		if (!$r = db_row("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.geslacht, deelnemers.confirmcode, personen.email 
+                              from personen, deelnemers where deelnemers.persoon=personen.id and deelnemers.id='" . db_esc($id) . "' and personen.verwijderd!='j' and deelnemers.verwijderd!='j'")) {
+		    $err[] = "Deelnemer niet gevonden...";
+		} else {
+		    $persoon_id = $r[0];
+				$voornaam = $r[1];
+				$tussenvoegsel = $r[2];
+				$achternaam = $r[3];
+			 	$naam = $achternaam;
+			    if (!empty($tussenvoegsel)) {
+			        $naam = $tussenvoegsel . " " . $naam;
+			    }
+				if (!empty($voornaam)) {
+				    $naam = $voornaam . " " . $naam;
+				}
+				$geslacht = $r[4];
+				$code = $r[5];
+				$email = $r[6];
 			}
-		if (empty($err))
-		{ 
-			mysql_query("update deelnemers set bevestigd='j' where id= '".mysql_real_escape_string($id)."'");
+		if (empty($err)) {
+			db_query("update deelnemers set bevestigd = 'j' where id= '" . db_esc($id) . "'");
 ?>
 	Deelnemer <?php echo $naam; ?> is bevestigd.<br><br>
 	<a href="?state=<?php echo $state; ?>&go=deelnemers&act=lijst">terug</a>
@@ -411,44 +423,75 @@ switch ($act) {
 	
 	case 'lijst':
 ?><br><br>
-		<!-- <?php print_r($user); ?> -->
 		<table border="0" cellpadding="2" cellspacing="0">
-			<tr><?php if (!empty($user['rechten']['verwijderen'])) { ?><td></td><?php } ?><td></td><td></td><td></td><td>Naam</td><td></td><td>bev.</td><td></td><td align="right">bedrag</td><td></td><td>email</td><td></td><td>school</td></tr>
-<?php		
-		$res=mysql_query("select personen.voornaam, personen.voorvoegsel, personen.achternaam, deelnemers.bevestigd, deelnemers.id, personen.email, scholen.naam from deelnemers
-		left join personen on personen.id=deelnemers.persoon 
-		left join scholen on scholen.id=deelnemers.school
+			<tr><?php if (!empty($user['rechten']['verwijderen'])) {
+			    ?><td></td><?php
+			} ?><td></td><td></td><td></td><td>Naam</td><td></td><td>bev.</td><td></td><td align="right">bedrag</td><td></td><td>email</td><td></td><td>school</td></tr>
+<?php
+		$res = db_query("select personen.voornaam, personen.voorvoegsel, personen.achternaam, deelnemers.bevestigd, deelnemers.id, personen.email, scholen.naam from deelnemers
+		left join personen on personen.id = deelnemers.persoon 
+		left join scholen on scholen.id = deelnemers.school
 		where personen.id=deelnemers.persoon and deelnemers.verwijderd!='j'");
 		$bg='#eeeeee';
-		$bg_count=1;
-		while ($r=mysql_fetch_row($res))
+		$bg_count = 1;
+		while ($r = db_row($res))
 		  {
-			 $bg="listrow_";
-			 if ($r[3]=='j') { $bg.="confirmed_"; } else { $bg.="not_confirmed_"; } $bg.= $bg_count; 
+			 $bg = "listrow_";
+			 if ($r[3] == 'j') {
+			     $bg .= "confirmed_";
+			 } else {
+			     $bg .= "not_confirmed_";
+			 }
+			 $bg .= $bg_count;
 ?>
 		<tr class="<?php echo $bg; ?>">
-        	<?php if (!empty($user['rechten']['verwijderen'])) { ?>
+        	<?php
+            if (!empty($user['rechten']['verwijderen'])) {
+        	    ?>
             <td><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=del&id=<?php echo $r[4]; ?>"><img src="../img/24x24/editcut.png"></a></td>
-            <?php } ?>
+            <?php
+        	} ?>
             <td><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=edit&id=<?php echo $r[4]; ?>"><img src="../img/24x24/edit.png"></a></td>
-            <td><?php if ($r[3]!='j') { ?><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=resendconfirmation&id=<?php echo $r[4]; ?>"><img src="../img/24x24/resend.png" width="24" alt="bevestiging opnieuw sturen" title="bevestiging opnieuw sturen"></a><?php } ?></td>            
+            <td><?php
+                if ($r[3] != 'j') {
+                    ?><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=resendconfirmation&id=<?php echo $r[4]; ?>"><img src="../img/24x24/resend.png" width="24" alt="bevestiging opnieuw sturen" title="bevestiging opnieuw sturen"></a><?php
+                } ?></td>
             <td width="20">&nbsp;</td>
-        	<td><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=edit&id=<?php echo $r[4]; ?>"><?php echo $r[0]; if (!empty($r[1])) { echo " $r[1]"; } echo " $r[2]";?></a></td>
+        	<td><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=edit&id=<?php echo $r[4]; ?>"><?php
+            echo $r[0];
+        	if (!empty($r[1])) {
+        	    echo " $r[1]";
+        	}
+        	echo " $r[2]";
+        	?></a></td>
         	<td width="20">&nbsp;</td>
-			<td><?php if ($r[3]=='j') { ?><img src="../img/24x24/ok.png"><?php } else { ?><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=confirm&id=<?php echo $r[4]; ?>"><img src="../img/24x24/not_ok.png" alt="bevestigen" title="bevestigen"></a<?php } ?></td>
+			<td><?php
+                if ($r[3]=='j') {
+                    ?><img src="../img/24x24/ok.png"><?php
+                } else {
+                    ?><a href="?state=<?php echo $state; ?>&go=<?php echo $go; ?>&act=confirm&id=<?php echo $r[4]; ?>"><img src="../img/24x24/not_ok.png" alt="bevestigen" title="bevestigen"></a<?php
+                } ?></td>
            <td width="20">&nbsp;</td> 
-           <td align="right" width="80"><?php $sr=mysql_fetch_row(mysql_query("select sum(bedrag) from sponsoring where voor='$r[4]' and verwijderd!='j'")); if (!empty($sr[0])) { echo "&euro; ".number_format($sr[0],2,',','.'); } ?></td>
+           <td align="right" width="80"><?php
+               $sr = db_row("select sum(bedrag) from sponsoring where voor='$r[4]' and verwijderd != 'j'");
+               if (!empty($sr[0])) {
+                   echo "&euro; " . number_format($sr[0],2,',','.');
+               } ?></td>
            <td width="20">&nbsp;</td>
-           <td><?php if ($r[3]!='j') { echo $r[5]; } ?></td>
+           <td><?php
+               if ($r[3] != 'j') {
+                   echo $r[5];
+               } ?></td>
            <td width="20">&nbsp;</td>
            <td><?php echo stripslashes($r[6]); ?></td>
        </tr>
         
-<?php		
-			//if ($bg=='#eeeeee') { $bg='#ffffff'; } else { $bg='#eeeeee'; }
+<?php
 			$bg_count++;
-			if ($bg_count>2) { $bg_count=1;}
-		  } // while
+			if ($bg_count > 2) {
+			    $bg_count=1;
+			}
+		  }
 ?>
 		</table>
 <?php		  

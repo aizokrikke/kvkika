@@ -17,11 +17,12 @@
 	$q .= "order by datum desc limit 0,2";
 
 	$res = db_query($q);
-	while ($i = db_row($res))
-	  {
+	while ($i = db_row($res)) {
 ?>		  
         <div class="blocker"></div>
         <div class="news_datum"><?php echo strftime("%d %B %Y",$i[0]); ?></div>
         <div class="news_lead"><?php echo $i[1]; ?></div>
         <div class="news_body"><?php echo $i[2]; ?></div>
-<?php  } ?>
+<?php
+	}
+?>

@@ -1,33 +1,30 @@
 <?php
-$domein= $HTTP_SERVER_VARS['HTTP_HOST'];
+$domein = $HTTP_SERVER_VARS['HTTP_HOST'];
 preg_match('/(\.){1}.+(\.){1}[a-z]+$/',$domein, $domeinparts);
-$hoofddomein=$domeinparts[0];
+$hoofddomein = $domeinparts[0];
 
 require('../libraries/connect.php');	
 		
-$cookienaam="bvva_sec";
+$cookienaam = "bvva_sec";
 // password aanpassen: alle quotes eruit, ' or '' = ' bug!
-$password=str_replace( "'", "", $password);
+$password = str_replace( "'", "", $password);
 
-  if ($submit=='enter')
-    {  
-	  $query = "SELECT `users`.* 
-				FROM `users`
-				WHERE ( (`users`.`login`='$login') and 
-				        (`users`.`password`='$password'))
-				ORDER BY `users`.`login`";
- 	  $result=mysql_query($query); 		
-	  if ($row = mysql_fetch_array($result))
-	    { // succes
-		  setcookie($cookienaam,$login,time()+(2*24*60*60),"/",'.'.$hoofddomein,0);
-		  header("Location: https://".$domein."/redactie/main_index.php"); 
-		  exit;
-		}
-		else
-		{
-		  die ("U bent niet geautoriseerd voor deze sectie");
-		} // if
-	} // if
+if ($submit == 'enter') {
+  $query = "SELECT `users`.* 
+            FROM `users`
+            WHERE ( (`users`.`login`='$login') and 
+                    (`users`.`password`='$password'))
+            ORDER BY `users`.`login`";
+  $result=db_query($query);
+  if ($row = db_array($result)) {
+      // succes
+      setcookie($cookienaam,$login,time()+(2*24*60*60),"/",'.'.$hoofddomein,0);
+      header("Location: https://".$domein."/redactie/main_index.php");
+      exit;
+  } else {
+      die ("U bent niet geautoriseerd voor deze sectie");
+  } // if
+} // if
 	
 ?>
 

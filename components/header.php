@@ -45,16 +45,16 @@ switch ($state) {
 
     <script type="text/javascript">
 
-var logos=[<?php 
+var logos = ['<?php
 $aant = 0;
 $lres = db_query("select file from sponsorlogo where verwijderd!='j' and live='j' order by volgorde asc");
 while ($lr = db_row($lres)) {
     echo "'$lr[0]',";
     $aant++;
 }
-?>''];
-var aantal_logos=<?php echo $aant - 1; ?>;
-var basis_url='<?php echo $base_url; ?>';
+?>'];
+var aantal_logos = <?php echo $aant - 1; ?>;
+var basis_url = '<?php echo $base_url; ?>';
 
 
   var _gaq = _gaq || [];

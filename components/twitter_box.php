@@ -29,8 +29,7 @@ echo "<div class=\"twitter_header\"><strong>@Kindvoorkika</strong> <div class=\"
 <div style=\"clear:both\"></div>
 </div>
 <div class=\"twitter_container\">";
-foreach ($r->statuses as $key=>$rec)
-  { 
+foreach ($r->statuses as $key=>$rec) {
    	echo "<div class=\"twitter_status\">";
 	echo "<div class=\"twitter_user\">";
    	echo "<div class=\"avatar\"><img src=\"".$rec->user->profile_image_url_https."\" class=\"avatar_foto\"></div>";
@@ -46,34 +45,31 @@ foreach ($r->statuses as $key=>$rec)
   	$t = utf8_decode($rec->text);
 	$i = 0;
 	$s = array();
-	foreach ($rec->entities->hashtags as $val)
-	  { 
+	foreach ($rec->entities->hashtags as $val) {
 	  	$s[$i]['start'] = $val->indices[0];
 	  	$s[$i]['end'] = $val->indices[1];
 		$s[$i]['replace'] = "<a href=\"https://www.twitter.com/search?q=%23".$val->text."&src=hash\" target=\"_blank\">#".$val->text."</a>";
 		$i++;
-	  } // foreach
-	foreach ($rec->entities->user_mentions as $val)
-	  { 
+    }
+	foreach ($rec->entities->user_mentions as $val) {
 	  	$s[$i]['start'] = $val->indices[0];
 	  	$s[$i]['end'] = $val->indices[1];
 		$s[$i]['replace'] = "<a href=\"https://www.twitter.com/".$val->screen_name."\" target=\"_blank\">@".$val->screen_name."</a>";
 		$i++;
-	  }	// foreach
-	foreach ($rec->entities->urls as $val)
-	  { 
+    }
+	foreach ($rec->entities->urls as $val) {
 	  	$s[$i]['start'] = $val->indices[0];
 	  	$s[$i]['end'] = $val->indices[1];
 		$s[$i]['replace'] = "<a href=\"".$val->expanded_url."\" target=\"_blank\">".$val->display_url."</a>";
 		$i++;
-	  }	// foreach
+    }
 	arsort($s); 
 	//print_r($s);
 	foreach ($s as $val) {
 //	  	print_r($val); echo "<br>";
 	  	$tail = substr($t, $val['end'],strlen($t) - $val['end']);
 		$t = substr($t,0, $val['start']) . $val['replace'] . $tail;
-	  } // foreach
+    }
 	echo $t."
 	</div>
 	<div class=\"twitter_actions\">
