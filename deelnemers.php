@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 require('libs/connect.php');
 require('logon/check_logon.php');
 require('libs/tools.php');

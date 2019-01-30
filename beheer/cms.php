@@ -1,4 +1,4 @@
-<span class="kop"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>"><img src="beheer/img/eleganticons-png/png/Paper.png" alt="content" title="content" align="absmiddle" height="24" width="24"> Content</a></span>
+<span class="kop"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>"><i class="fas fa-file-alt fa-fw"></i> Content</a></span>
 
 <?php 
 
@@ -30,8 +30,8 @@ for ($i = 1; $i < $aantal_boxen; $i++) {
 }
 
 if ($annuleren == 'annuleren') {
-    $do='';
-	$act='';
+    $do = '';
+	$act = '';
 }
 
 $nu = time();
@@ -774,11 +774,11 @@ De foto <?php echo $r[1]; ?> echt verwijderen?<br /><br />
 	default:
 ?>	
 <ul>
-	<li><a href="?state=admin&go=content&m=pagina"><img src="beheer/img/content.png" alt="pagina's bewerken" title="pagina's bewerken" align="absmiddle"> Pagina's bewerken</a></li>
-	<li><a href="?state=admin&go=content&m=menu"><img src="beheer/img/menu.png" alt="menu bewerken" title="menu bewerken" align="absmiddle" width="48" height="48"> Menu bewerken</a></li>    
-	<li><a href="?state=admin&go=content&m=nieuws"><img src="beheer/img/news.png" alt="nieuws bewerken" title="nieuws bewerken" align="absmiddle"> Nieuws bewerken</a></li>
-	<li><a href="?state=admin&go=content&m=logo"><img src="beheer/img/Basic_set2_Png/Basic_set2_Png/money_48.png" alt="sponsorlogo's bewerken" title="sponsorlogo's bewerken" align="absmiddle"> Sponsorlogo's bewerken</a></li>
-	<li><a href="?state=admin&go=content&m=foto"><img src="beheer/img/Basic_set2_Png/Basic_set2_Png/photo_48.png" alt="foto's bewerken" title="foto's bewerken" align="absmiddle"> Foto's bewerken</a></li>
+	<li><a href="?state=admin&go=content&m=pagina"><i class="far fa-file-alt fa-2x fa-fw"></i> Pagina's bewerken</a></li>
+	<li><a href="?state=admin&go=content&m=menu"><i class="fas fa-bars fa-2x fa-fw"></i> Menu bewerken</a></li>
+	<li><a href="?state=admin&go=content&m=nieuws"><i class="fas fa-bullhorn fa-2x fa-fw"></i> Nieuws bewerken</a></li>
+	<li><a href="?state=admin&go=content&m=logo"><i class="fas fa-money-bill-wave fa-2x fa-fw"></i> Sponsorlogo's bewerken</a></li>
+	<li><a href="?state=admin&go=content&m=foto"><i class="fas fa-camera-retro fa-2x fa-fw"></i> Foto's bewerken</a></li>
 </ul>    
 <?php
 	break;

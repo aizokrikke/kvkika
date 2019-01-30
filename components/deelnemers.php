@@ -3,7 +3,7 @@ $zoek = $_REQUEST['zoek'];
 if (empty($id)) {
     $id = 1;
 }
-if(!$p = bd_row("select foto, lead, body, views, menu from " . $sitestatus . "pagina where id = '$id' and verwijderd != 'j'")) {
+if(!$p = db_row("select foto, lead, body, views, menu from " . $sitestatus . "pagina where id = '$id' and verwijderd != 'j'")) {
     $id = strtolower($id);
     $p = bd_row("select foto, lead, body, views, menu from " . $sitestatus .
         "pagina where naam like '$id' and verwijderd != 'j'");
@@ -24,8 +24,8 @@ if (!empty($p)) {
 	$s = 1;
   }
 if ($subdomein == 'dev') {
-    $s = $s + 10; }
-  
+    $s = $s + 10;
+}
 include('components/header.php'); ?>
 
 <div id="linkerbalk">
