@@ -93,10 +93,6 @@ function check_rights($required='', $ret='') {
 				  setcookie($cookienaam,$user_cookie,$sessietijd,"/",$hoofddomein,0);
 			  }
 		  }
-	
-	// staat server in onderhoudsmodus?
-	// $row = mysql_fetch_array(mysql_query("SELECT waarde FROM status WHERE parameter='onderhoud_mode'"));
-	// $systeem['onderhoud']=$row[0];
 
 	if (empty($ret)) {
 	    $ret = 'index.php';

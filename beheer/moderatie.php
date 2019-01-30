@@ -3,24 +3,28 @@
 
 
 <?php 
-$bericht=mysql_real_escape_string($_REQUEST['bericht']);
-$blokkeren=$_REQUEST['blokkeren'];
-$ok=$_REQUEST['ok'];
-if ($blokkeren=='blokkeren')
-  { mysql_query("update berichten set blokkeren='j' where id='$bericht'"); }
-if ($ok=='bericht is ok')
-  { mysql_query("update berichten set blokkeren='n' where id='$bericht'"); }
+$bericht = db_esc($_REQUEST['bericht']);
+$blokkeren = $_REQUEST['blokkeren'];
+$ok = $_REQUEST['ok'];
+if ($blokkeren == 'blokkeren') {
+    db_query("update berichten set blokkeren='j' where id='$bericht'");
+}
+if ($ok == 'bericht is ok') {
+    db_query("update berichten set blokkeren='n' where id='$bericht'");
+}
 
 
-$br=mysql_fetch_row(mysql_query("select id, aan, naam, email, kop, bericht, blokkeren from berichten where id='$bericht' and verwijderd!='j'")) or die(mysql_error());
+$br = db_row("select id, aan, naam, email, kop, bericht, blokkeren from berichten where id='$bericht' and verwijderd!='j'");
 
-echo "van: ".stripslashes($br[2])." (".stripslashes($br[3]).")<br /><br />";
-echo "<strong>".stripslashes($br[4])."</strong><br /><br />";
-echo stripslashes($br[5])."<br /><br />";
+echo "van: " . stripslashes($br[2]) . " (".stripslashes($br[3]) . ")<br /><br />";
+echo "<strong>" . stripslashes($br[4]) . "</strong><br /><br />";
+echo stripslashes($br[5]) . "<br /><br />";
 
-if ($br[6]=='j') { echo "Bericht geblokkerd<br /><br />"; }
+if ($br[6] == 'j') {
+    echo "Bericht geblokkerd<br /><br />";
+}
 
-$dr=mysql_fetch_row(mysql_query("select voornaam, voorvoegsel, achternaam, pagina from deelnemers, personen where deelnemers.persoon=personen.id and deelnemers.id='$br[1]' and deelnemers.verwijderd!='j' and personen.verwijderd!='j'")) or die(mysql_error());
+$dr = db_row("select voornaam, voorvoegsel, achternaam, pagina from deelnemers, personen where deelnemers.persoon=personen.id and deelnemers.id='$br[1]' and deelnemers.verwijderd!='j' and personen.verwijderd!='j'");
 
 ?>
 Voor: <a href="https://<?php echo $domein;?>/deelnemers/<?php echo stripslashes($dr[3]); ?>" target="_blank"><?php echo $dr[0]; if (!empty($dr[1])) { echo stripslashes($dr[1])." "; } if (!empty($dr[2])) { echo stripslashes($dr[2])." "; }?></a> 

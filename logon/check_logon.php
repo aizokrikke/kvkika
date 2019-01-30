@@ -68,7 +68,7 @@ function login($login,$password,$set_cookie = 'j') {
   	$password_md5 = md5($password);
 //	echo "login: $login $password $password_md5<br>";
 	
-	$res = db_query("SELECT id,voornaam, voorvoegsel, achternaam, login_md5 FROM personen WHERE login='$login' and password_md5='$password_md5' and verwijderd!='j' ORDER BY login") or die(mysql_error());
+	$res = db_query("SELECT id,voornaam, voorvoegsel, achternaam, login_md5 FROM personen WHERE login='$login' and password_md5='$password_md5' and verwijderd!='j' ORDER BY login");
 	if ($row = db_row($res)) {  // user wel in database
 	  	$found = true;
 		$user['id'] = $row[0];
@@ -142,7 +142,6 @@ function check_login() {
                   $naam .= " $row[3]";
               }
               $user['naam'] = $naam;
-              //mysql_query("INSERT INTO userlog (id, tijd, ip, state) VALUES ('$row[0]','$tijdstip','$ip','$state')") or die(mysql_error());
               setcookie($user_cookienaam, $user_cookie, $sessietijd,"/", $hoofddomein,0);
 
               do_rights($row[0]);

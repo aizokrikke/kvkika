@@ -84,7 +84,7 @@ switch ($do) {
 			        $err[] = "Wachtwoorden zijn niet gelijk";
 			    }
 			  } else {
-				$r = db_row("select password_md5 from personen where id='".mysql_real_escape_string($persoon_id)."' and verwijderd!='j'");
+				$r = db_row("select password_md5 from personen where id='" . db_esc($persoon_id) . "' and verwijderd!='j'");
 				$passmd5 = $r[0];
 			  }
 		  
@@ -192,7 +192,7 @@ switch ($act) {
 	
 		// scholen zonder deelnemers
 	
-		$res = db_query("select scholen.naam, scholen.id from scholen where NOT EXISTS(select id from deelnemers where verwijderd!='j' and deelnemers.school=scholen.id) order by scholen.naam DESC") or die(mysql_error());
+		$res = db_query("select scholen.naam, scholen.id from scholen where NOT EXISTS(select id from deelnemers where verwijderd!='j' and deelnemers.school=scholen.id) order by scholen.naam DESC");
 		
 		while ($r = db_row($res))
 		  {
@@ -209,8 +209,8 @@ switch ($act) {
 	case 'edit';
 	case 'del':
 		if ($opnieuw != 'j') {
-			if (!$r = DB_ROW("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.geslacht, personen.login, personen.adres, personen.adres_nr, personen.postcode, personen.plaats, deelnemers.pagina, deelnemers.school, personen.email from personen, deelnemers 
-                                  where deelnemers.persoon=personen.id and deelnemers.id='" . DB_ESC($id) . "' and personen.verwijderd != 'j' and deelnemers.verwijderd != 'j'"))
+			if (!$r = db_row("select personen.id,personen.voornaam, personen.voorvoegsel, personen.achternaam, personen.geslacht, personen.login, personen.adres, personen.adres_nr, personen.postcode, personen.plaats, deelnemers.pagina, deelnemers.school, personen.email from personen, deelnemers 
+                                  where deelnemers.persoon=personen.id and deelnemers.id='" . db_esc($id) . "' and personen.verwijderd != 'j' and deelnemers.verwijderd != 'j'"))
 			{
 			    $err[] = "Deelnemer niet gevonden...";
 			} else {

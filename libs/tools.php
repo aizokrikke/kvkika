@@ -445,7 +445,7 @@ function event_datum() {
 } // event_datum
 
 function event_dag() {
-	$r = db_rowy("select waarde from system where parameter='event_dag'");
+	$r = db_row("select waarde from system where parameter='event_dag'");
 	return $r[0];
 } // event_dag
 

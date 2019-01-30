@@ -209,7 +209,7 @@ switch ($do) {
 			$pagina['berichten_toestaan'] = $berichten_toestaan;
 			$pagina['show_stand'] = $show_stand;
 			$pagina['show_berichten'] = $show_berichten;
-			$r = db_row("select doel, motivatie from deelnemers where id='".mysql_real_escape_string($id)."'");
+			$r = db_row("select doel, motivatie from deelnemers where id='".db_esc($id)."'");
 			$pagina['doel'] = stripslashes($r[0]);
 			$pagina['motivatie'] = stripslashes($r[1]);
 			

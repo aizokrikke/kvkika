@@ -3,18 +3,16 @@
 
 <table>
 <?php
-$id=mysql_real_escape_string($_REQUEST['id']);
-$act=mysql_real_escape_string($_REQUEST['act']);
+$id = db_esc($_REQUEST['id']);
+$act = db_esc($_REQUEST['act']);
 
-if ($act=='del')
-  { mysql_query("update docs set verwijderd='j' where id='$id'"); }
-  
+if ($act=='del') {
+    db_query("update docs set verwijderd='j' where id='$id'");
+}
 
-
-$dres=mysql_query("select docs.id, docs.naam, docs.tijd, doctypes.icon, doctypes.naam from docs, doctypes where docs.doctype=doctypes.id and docs.verwijderd!='j' order by docs.naam, docs.tijd desc") or die(mysql_error);
+$dres = db_query("select docs.id, docs.naam, docs.tijd, doctypes.icon, doctypes.naam from docs, doctypes where docs.doctype=doctypes.id and docs.verwijderd!='j' order by docs.naam, docs.tijd desc");
  
-while ($dr=mysql_fetch_row($dres))
-  {
+while ($dr = db_row($dres)) {
 ?>
 	<tr>
     	<td><a href="?state=admin&go=documenten&act=del&id=<?php echo $dr[0]; ?>"><img src="beheer/img/eleganticons-png/png/X.png" width="24" height="24" /></a></td>
@@ -23,7 +21,7 @@ while ($dr=mysql_fetch_row($dres))
         <td style="padding-left:10px;"><?php echo strftime("%d %B %y %H:%M",$dr[2]); ?></td>
     </tr>
 <?php
-  }
+}
 ?>  
 </table>
 

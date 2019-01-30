@@ -59,7 +59,7 @@
         return $resource->num_rows();
     }
 
-    function insert_id() {
+    function db_insert_id() {
         global $db;
 
         return $db->insert_id();

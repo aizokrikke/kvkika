@@ -39,18 +39,18 @@ switch ($do) {
 	case 'VERSTUUR':
 		$bedrag=$_REQUEST['bedrag'];
 		
-		$bedrag=preg_replace('/,/','.',$bedrag);
-		$naam=$_REQUEST['naam'];
-		$bankrekening=$_REQUEST['bankrekening'];
-		$onderwerp=$_REQUEST['onderwerp'];
-		$voorwaarden=$_REQUEST['voorwaarden'];
+		$bedrag = preg_replace('/,/','.',$bedrag);
+		$naam = $_REQUEST['naam'];
+		$bankrekening = $_REQUEST['bankrekening'];
+		$onderwerp = $_REQUEST['onderwerp'];
+		$voorwaarden = $_REQUEST['voorwaarden'];
 		
-		$bedrag=mysql_real_escape_string($bedrag);
-		$naam=mysql_real_escape_string($naam);
-		$bankrekening=mysql_real_escape_string($bankrekening);
-		$id=mysql_real_escape_string($id);
+		$bedrag = db_esc($bedrag);
+		$naam = db_esc($naam);
+		$bankrekening = db_esc($bankrekening);
+		$id = db_esc($id);
 		
-		mysql_query("insert into sponsoring (bedrag, van, rekening, voor) values ('$bedrag','$naam','$bankrekening','$id')") or die(mysql_error());
+		db_query("insert into sponsoring (bedrag, van, rekening, voor) values ('$bedrag','$naam','$bankrekening','$id')");
 		
 		break;	
 	
@@ -220,5 +220,4 @@ switch ($do) {
 		  	
 		break;
 }
-
 ?>
