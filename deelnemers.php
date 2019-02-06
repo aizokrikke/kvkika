@@ -23,6 +23,7 @@ $pass1 = $_REQUEST['pass1'];
 $pass2 = $_REQUEST['pass2'];
 $message = $_REQUEST['message'];
 
+
 // paginagegevens ophalen
 $pagcode = utf8_decode($pag);
 $state = 'deelnemer';
@@ -44,7 +45,7 @@ $pres = db_query("select personen.voornaam,
 							deelnemers.categorie
 							from deelnemers, personen
 							where 
-								deelnemers.pagina='" .db_esc($pagcode) . "' and 
+								deelnemers.pagina='" . db_esc($pagcode) . "' and 
 								deelnemers.persoon = personen.id and 
 								deelnemers.verwijderd != 'j' and
 								deelnemers.bevestigd != 'n'");
@@ -93,10 +94,11 @@ if ($pr = db_row($pres)) {
     $pagina['show'] = 'n';
     }
 } else {
-    $pagina['deelnemer']='niet gevonden';
-    $pagina['foto']='not_found.png';
-    $pagina['show']='n';
+    $pagina['deelnemer'] = 'niet gevonden';
+    $pagina['foto'] = 'not_found.png';
+    $pagina['show'] = 'n';
 }
+
 
 switch ($do) {
 	case 'verwijderen':
@@ -173,17 +175,17 @@ switch ($do) {
 						
 						$verhouding = 177 / 132;
 						
-						if ($height >= ($width*$verhouding)) {
+						if ($height >= ($width * $verhouding)) {
 							  // hoogte is in verhouding groter
 							  $sw = $width;
-							  $sh = $width*$verhouding;
-							  $sy = round(($height-$sh)/2);
+							  $sh = $width * $verhouding;
+							  $sy = round(($height - $sh) / 2);
 							  $sx = 0;
 						  } else {
 						    // breedte is in verhouding groter
 							$sh = $height;
-							$sw = $height/$verhouding;
-							$sx = round(($width-$sw)/2);
+							$sw = $height / $verhouding;
+							$sx = round(($width - $sw) / 2);
 							$sy = 0;
 						  }
 					
@@ -199,18 +201,18 @@ switch ($do) {
 					  }
 				  }
 			  } // if is_uploaded_file
-			  
+
 			// settings opslaan
 			db_query("update deelnemers set berichten_toestaan='" . db_esc($berichten_toestaan) . "', show_stand='" .
                 db_esc($show_stand) . "', show_berichten='" . db_esc($show_berichten) . "', doel='" . db_esc($doel) .
                 "', motivatie='" . db_esc($motivatie) . "', school='". db_esc($school) . "' where id = '" . db_esc($id). "'");
-			$sr = db_row("select naam from scholen where id = '" . db_row($school) . "'");
+			$sr = db_row("select naam from scholen where id = '" . db_esc($school) . "'");
 			$pagina['school'] = $sr[0];
 			$pagina['school_id'] = $school;
 			$pagina['berichten_toestaan'] = $berichten_toestaan;
 			$pagina['show_stand'] = $show_stand;
 			$pagina['show_berichten'] = $show_berichten;
-			$r = db_row("select doel, motivatie from deelnemers where id='".db_esc($id)."'");
+			$r = db_row("select doel, motivatie from deelnemers where id='" . db_esc($id) . "'");
 			$pagina['doel'] = stripslashes($r[0]);
 			$pagina['motivatie'] = stripslashes($r[1]);
 			

@@ -62,7 +62,7 @@
     function db_insert_id() {
         global $db;
 
-        return $db->insert_id();
+        return $db->insert_id;
     }
 
 ?>

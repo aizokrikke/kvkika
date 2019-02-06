@@ -1,9 +1,9 @@
 <?php
 
 $zoek = $_REQUEST['zoek'];
-//echo "id: $id<br>";
+
 if (empty($id)) {
-    $id=1;
+    $id = 1;
 }
 if(!$p = db_row("select foto, lead, body, views, menu from ".$sitestatus."pagina where id='$id' and verwijderd!='j'")) {
     $id = strtolower($id);
@@ -17,7 +17,8 @@ if (!empty($p)) {
 	$views++;
 	db_query("update ".$sitestatus."pagina set views='$views' where id='$id'");
 	$s = $p[4];
-} else { $foto=1;
+} else {
+    $foto = 1;
    	$lead = "Geselecteerde pagina is niet gevonden";
    	$body = '';
 	$s = 1;
@@ -76,10 +77,10 @@ include('components/header.php');
 ?>
 		<tr>
 			<td><a href="https://<?php echo $domein; ?>/deelnemers/<?php echo $dr[0];?>"><?php if (!empty($dr[1])) {
-			    echo $dr[1]." ";
+			    echo $dr[1] . " ";
 			}
 			if (!empty($dr[2])) {
-			    echo $dr[2]." ";
+			    echo $dr[2] . " ";
 			}
 			echo $dr[3];?></a></td>
 		 </tr>   
@@ -88,11 +89,7 @@ include('components/header.php');
     }
 ?>	
 	</table>
-    </div>    
-	
-    
-
-
+    </div>
     
 </div>
 

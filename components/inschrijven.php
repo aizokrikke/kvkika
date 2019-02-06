@@ -276,7 +276,7 @@ de inzet van:<br /><br />
                 ?> selected="selected"<?php
             } ?>>andere school</option>
         <?php
-            $sres = dv_query("select id,naam from scholen where verwijderd!='j' order by naam");
+            $sres = db_query("select id,naam from scholen where verwijderd!='j' order by naam");
             while ($sr = db_row($sres)) {
         ?>
             <option value="<?php echo $sr[0];?>" <?php if ($sr[0] == $school) {

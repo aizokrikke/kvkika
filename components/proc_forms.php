@@ -37,7 +37,7 @@ switch ($do) {
 		break;
 		
 	case 'VERSTUUR':
-		$bedrag=$_REQUEST['bedrag'];
+		$bedrag = $_REQUEST['bedrag'];
 		
 		$bedrag = preg_replace('/,/','.',$bedrag);
 		$naam = $_REQUEST['naam'];
@@ -157,7 +157,7 @@ switch ($do) {
 			    $fout[]="Om mee te doen moet je akkoord gaan met het deelnemersreglement";
 			}
 		  }
-		
+
 		if (empty($fout)) { // alles is ok, dus in de database
 			    $soort = db_esc($soort);
 		  		$voornaam = db_esc($voornaam);
@@ -170,6 +170,8 @@ switch ($do) {
 		  		$straat = db_esc($straat);
 		  		$nummer = db_esc($nummer);
 
+
+
 				// deelnemer
 				//$postcode="$pc_cijfer ".strtoupper($pc_letter);
 				$postcode = db_esc($postcode);
@@ -177,12 +179,14 @@ switch ($do) {
 				$login = db_esc($login);
 				$password_md5 = md5($password);
 				$code = generate_code();
+
 				
 				db_query("insert into personen (voornaam, voorvoegsel, achternaam, geslacht, gebdatum, email, tel, mobiel, adres, adres_nr, postcode, plaats, login, login_md5, password_md5, aangemaakt, mutatie) 
                               values  ('$voornaam', '$tussenvoegsel', '$achternaam', '$geslacht', '$gebdatum', '$email', '$telefoon', '$mobiel', '$straat', '$nummer', '$postcode', '$plaats', '$login', '$login_md5', '$password_md5','$nu','$nu')");
-				
 				$deelnemer = db_insert_id();
 				$pagina = db_esc($pagina);
+
+
 				
 				db_query("insert into deelnemers (persoon, categorie, pagina, berichten_toestaan, show_berichten, show_stand, bevestigd, confirmcode, school) values ('$deelnemer','$soort','$pagina','j','j','j','n','$code','$school')");
 				$deelnemer_id=db_insert_id();
@@ -203,7 +207,8 @@ switch ($do) {
 				} else {
 				    $zd = 'dochter';
 				}
-				
+
+
 				$naam = stripslashes($naam);
 				$v_naam = stripslashes($v_naam);
 			  
@@ -216,6 +221,8 @@ switch ($do) {
 				verstuur_bevestiging($persoon);
 			   
 				$status = 'bedankt';
+
+
 		  }
 		  	
 		break;
