@@ -299,7 +299,7 @@ switch ($do) {
                             values ('" . db_esc($bedrag) . "','" . db_esc($naam) . "','" . db_esc($bankrekening) .
                             "','" . db_esc($id) . "','" . db_esc($email) . "','" . db_esc($adres) . "','" . db_esc($plaats) .
                             "','" . db_esc($telefoon) . "','$nu')");
-				$bericht=stripslashes(urldecode($bericht));
+				$bericht = stripslashes(urldecode($bericht));
 				if ($onderwerp == 'Onderwerp') {
 				    $onderwerp='';
 				}

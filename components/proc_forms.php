@@ -19,7 +19,7 @@ $telefoon = $_REQUEST['telefoon'];
 $mobiel = $_REQUEST['mobiel'];
 $school = $_REQUEST['school'];
 $pagina = $_REQUEST['pagina'];
-$login = $_REQUEST['login'];
+$loginnaam = $_REQUEST['login'];
 $password = $_REQUEST['password'];
 $password_check = $_REQUEST['password_check'];
 $akkoord = $_REQUEST['akkoord'];
@@ -33,7 +33,7 @@ $v_mobiel = $_REQUEST['v_mobiel'];
 
 switch ($do) {
 	case 'INLOGGEN':
-		login($login,$password);
+		login($loginnaam,$password);
 		break;
 		
 	case 'VERSTUUR':
@@ -132,13 +132,13 @@ switch ($do) {
 			if (!empty($ec)) {
 			    $fout[]="Geen geldig emailadres van de deelnemer ingevuld";
 			}
-			if (empty($login)) {
-                $login = $email;
-                if (empty($login)) {
+			if (empty($loginnaam)) {
+                $loginnaam = $email;
+                if (empty($loginnaam)) {
                     $fout[] = "Geen login gekozen";
                 }
             }
-			if ($er = db_row("select id from personen where login = '$login' and verwijderd != 'j'")) {
+			if ($er = db_row("select id from personen where login = '$loginnaam' and verwijderd != 'j'")) {
 			    $fout[] = "Login is al in gebruik. Kies een andere login";
 			}
 			if (empty($pagina)) {
@@ -170,27 +170,23 @@ switch ($do) {
 		  		$straat = db_esc($straat);
 		  		$nummer = db_esc($nummer);
 
-
-
 				// deelnemer
 				//$postcode="$pc_cijfer ".strtoupper($pc_letter);
 				$postcode = db_esc($postcode);
-				$login_md5 = md5($login);
-				$login = db_esc($login);
+				$login_md5 = md5($loginnaam);
+				$loginnaam = db_esc($loginnaam);
 				$password_md5 = md5($password);
 				$code = generate_code();
 
-				
 				db_query("insert into personen (voornaam, voorvoegsel, achternaam, geslacht, gebdatum, email, tel, mobiel, adres, adres_nr, postcode, plaats, login, login_md5, password_md5, aangemaakt, mutatie) 
-                              values  ('$voornaam', '$tussenvoegsel', '$achternaam', '$geslacht', '$gebdatum', '$email', '$telefoon', '$mobiel', '$straat', '$nummer', '$postcode', '$plaats', '$login', '$login_md5', '$password_md5','$nu','$nu')");
+                              values  ('$voornaam', '$tussenvoegsel', '$achternaam', '$geslacht', '$gebdatum', '$email', '$telefoon', '$mobiel', '$straat', '$nummer', '$postcode', '$plaats', '$loginnaam', '$login_md5', '$password_md5','$nu','$nu')");
 				$deelnemer = db_insert_id();
 				$pagina = db_esc($pagina);
-
-
 				
-				db_query("insert into deelnemers (persoon, categorie, pagina, berichten_toestaan, show_berichten, show_stand, bevestigd, confirmcode, school) values ('$deelnemer','$soort','$pagina','j','j','j','n','$code','$school')");
-				$deelnemer_id=db_insert_id();
-				
+				db_query("insert into deelnemers (persoon, categorie, pagina, berichten_toestaan, show_berichten, show_stand, bevestigd, confirmcode, school) 
+                              values ('$deelnemer','$soort','$pagina','j','j','j','n','$code','$school')");
+				$deelnemer_id = db_insert_id();
+
 				//ouder/verzorger
 				$v_voornaam = db_esc($v_voornaam);
 				$v_achternaam = db_esc($v_achternaam);

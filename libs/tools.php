@@ -285,12 +285,12 @@ function stuur_mail($aan, $ond, $van, $html='', $text='', $type='multipart') {
 				
 			case 'text';
 			case 'txt':
-				$headers .= 'Content-type: text/plain; charset=iso-8859-1' . "\r\n";
+				$headers .= 'Content-type: text/plain; charset=UTF-8' . "\r\n";
 				$headers .= 'Content-Transfer-Encoding: quoted-printable' . "\r\n";
 			break;	
 
 			case 'html':
-				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 				$headers .= 'Content-Transfer-Encoding: quoted-printable' . "\r\n";
 			break;	
 		}
@@ -299,11 +299,11 @@ function stuur_mail($aan, $ond, $van, $html='', $text='', $type='multipart') {
 			case 'multipart';
 			case 'multi';
 			default:
-				$html_part = 'Content-type: text/html; charset=iso-8859-1' . "\r\n";	
+				$html_part = 'Content-type: text/html; charset=UTF-8' . "\r\n";
 				$html_part .= 'Content-Transfer-Encoding: quoted-printable' . "\r\n\r\n";
 				$html_part .= php_quot_print_encode($html) . "\r\n";
 
-				$text_part = 'Content-type: text/text; charset=iso-8859-1' . "\r\n";	
+				$text_part = 'Content-type: text/text; charset=UTF-8' . "\r\n";
 				$text_part .= 'Content-Transfer-Encoding: quoted-printable' . "\r\n\r\n";
 				$text_part .= php_quot_print_encode($text) . "\r\n";
 

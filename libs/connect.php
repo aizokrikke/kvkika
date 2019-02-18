@@ -21,7 +21,13 @@
     function db_query($q) {
         global $db;
 
-        return $db->query($q);
+        $out = $db->query($q);
+
+        if (!empty($db->error)) {
+            die("database error: " . $db->error );
+        }
+
+        return $out;
     }
 
     function getResource($in) {

@@ -101,7 +101,7 @@ de inzet van:<br /><br />
             $pagina = stripslashes($pagina);
 
 
-            $dr=db_row("select personen.voornaam, personen.voorvoegsel, personen.achternaam 
+            $dr = db_row("select personen.voornaam, personen.voorvoegsel, personen.achternaam 
                                                 from personen, verzorgers 
                                                 where verzorgers.deelnemer='$id' and 
                                                 personen.id=verzorgers.verzorger and 
@@ -303,7 +303,7 @@ de inzet van:<br /><br />
     </div>
     <div style="clear:both"></div>
     <div class="formitem">
-    <input type="text" name="login" value="<?php echo stripslashes($login);?>" id="login" class="input_active" placeholder="login" />
+    <input type="text" name="login" value="<?php echo stripslashes($loginnaam);?>" id="login" class="input_active" placeholder="login" />
     </div>
     <div style="clear:both"></div>
 
