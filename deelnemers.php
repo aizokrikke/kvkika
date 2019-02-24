@@ -549,7 +549,7 @@ if ($user['id'] == $pagina['usr']) {?>
 				$plaats = '';
 				$telefoon = '';
 				$bericht = '';
-		  }		  
+		  }
 	?>	
 		<div id="deelnemer_info">
 		<div id="deelnemer_foto"><img src="<?php echo $protocol . $domein;?>/fotos/<?php if (!empty($pagina['foto'])) { echo $pagina['foto']; } else { echo 'def.png'; }?>"></div>
