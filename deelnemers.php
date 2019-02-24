@@ -384,10 +384,8 @@ if ($go == 'settings') {
 	switch ($go) { 
  		default:
 		// mobile versie van de sponsorbox 
-		if (doneren_toegestaan()=='j') {
-            if ($pagina['show'] == 'j') {
-                include('components/sponsor_box_mobile.php');
-            }
+		if (doneren_toegestaan() == 'j' && $pagina['show'] == 'j') {
+		    include('components/sponsor_box_mobile.php');
         }
 
 		if (!empty($message)) {
@@ -543,13 +541,14 @@ if ($user['id'] == $pagina['usr']) {?>
 	case 'donatie':
 	
 		if ($opnieuw != 'j') {
-				$bedrag='';
-				$naam='';
-				$email='';
-				$bankrekening='';
-				$adres='';
-				$plaats='';
-				$telefoon='';
+				$bedrag = '';
+				$naam = '';
+				$email = '';
+				$bankrekening = '';
+				$adres = '';
+				$plaats = '';
+				$telefoon = '';
+				$bericht = '';
 		  }		  
 	?>	
 		<div id="deelnemer_info">
