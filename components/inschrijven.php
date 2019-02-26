@@ -296,7 +296,7 @@ de inzet van:<br /><br />
     <div class="formitem">
     <span class="body">
     <hr />
-    Als je meedoet aan 'De Berg Op' krijg je een eigen pagina. Deze pagina is voor iedereen te bereiken via www.kinderenvoorkika.nl/deelnemers/<span class="paginanaam">jouw-pagina-naam</span>. Deze paginanaam mag zelf gekozen worden. Mensen die een deelnemers willen sponsoren kunnen dit doen via de eigen deelnemerspagina. De instellingen kunnen worden gewijzigd door in te loggen. Kies hiervoor een login en wachtwoord. <br />
+    Als je meedoet aan 'De Berg Op' krijg je een eigen pagina. Deze pagina is voor iedereen te bereiken via www.kinderenvoorkika.nl/deelnemers/<span class="paginanaam">jouw-pagina-naam</span>. Deze paginanaam mag zelf gekozen worden. Mensen die een deelnemer willen sponsoren kunnen dit doen via de eigen deelnemerspagina. De instellingen kunnen worden gewijzigd door in te loggen. Kies hiervoor een login en wachtwoord. <br />
     <br /></span>
 
     <span class="body">https://www.kinderenvoorkika.nl/deelnemers/</span><input type="text" name="pagina" value="<?php echo stripslashes($pagina);?>" id="pagina" class="input_active" placeholder="pagina" />
