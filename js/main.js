@@ -323,61 +323,60 @@ function close_cms_datum() {
 }
 
 
-var sc=parseInt(getCookie('kvkikacount'));
-if (!sc) { sc=0; }
-//alert(sc);
+var sc = parseInt(getCookie('kvkikacount'));
+if (!sc) {
+	sc=0;
+}
 
-var slide_step=7;
-var slide_pos=150;
-var slide_status='start';
-var slide_op=100;
+var slide_step = 7;
+var slide_pos = 150;
+var slide_status = 'start';
+var slide_op = 100;
 	
 function slide_in() {
-	var div=document.getElementById('logobox');
+	var div = document.getElementById('logobox');
 	
-	if (slide_status=='ready') { slide_status='fade'; }
+	if (slide_status == 'ready') {
+		slide_status='fade';
+	}
 	
-	if (slide_status=='fade')
-	  {
-		 slide_op=slide_op-slide_step; 
-		 div.style.opacity=(slide_op/100);
-		 div.style.filter='alpha(opacity=' + slide_op + ')';
-		 //alert(slide_op);
-		 if (slide_op<=0)
-		   { 
-		   		slide_status='slide'; 
-		   }
+	if (slide_status == 'fade') {
+		 slide_op = slide_op-slide_step;
+		 div.style.opacity = (slide_op / 100);
+		 div.style.filter = 'alpha(opacity=' + slide_op + ')';
+		 if (slide_op <= 0) {
+		   		slide_status = 'slide';
+		 }
 		 setTimeout('slide_in()',40);
-	  }
-	  else
-	  {
-		  if (slide_pos==150)
-		    {
-				div.style.marginLeft='150px';
-				div.style.opacity=1;
-				div.style.filter='alpha(opacity=100)';
-				var logo='<img src="https://'+basis_url+'/img/logos/'+logos[sc]+'">';
-				div.innerHTML=logo;
-			}
-		slide_pos=slide_pos-slide_step;
-		div.style.marginLeft=slide_pos+'px';
-		if (slide_pos<=1)
-		  { div.style.marginLeft=0+'px';
-			slide_pos=150;
-			slide_op=100; 
-			slide_status='ready'}
-		  else
-		  { setTimeout('slide_in()',20); }
-	  }
+  	} else {
+		if (slide_pos == 150) {
+			div.style.marginLeft = '150px';
+			div.style.opacity = 1;
+			div.style.filter = 'alpha(opacity=100)';
+			var logo = '<img src="https://' + basis_url + '/img/logos/' + logos[sc]+'">';
+			div.innerHTML = logo;
+		}
+		slide_pos = slide_pos-slide_step;
+		div.style.marginLeft = slide_pos + 'px';
+		if (slide_pos <= 1) {
+			div.style.marginLeft = 0 + 'px';
+			slide_pos = 150;
+			slide_op = 100;
+			slide_status = 'ready';
+		} else {
+			setTimeout('slide_in()',20);
+		}
+  	}
 }
 	
 function sponsor_cycle() {;
 	if ((slide_status=='ready') || (slide_status=='start'))
-	  { 
-		//alert(sc);
+	  {
 		slide_in();
-		sc=sc+1;
-		if (sc>aantal_logos) { sc=0; }
+		sc = sc+1;
+		if (sc > aantal_logos) {
+			sc = 0;
+		}
 		setCookie('kvkikacount',sc,1);
 	  }
 	slide_timer = setTimeout('sponsor_cycle()',5000);  

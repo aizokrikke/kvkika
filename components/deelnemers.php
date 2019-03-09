@@ -1,29 +1,32 @@
 <?php
-$zoek=$_REQUEST['zoek'];
-//echo "id: $id<br>";
-if (empty($id)) { $id=1; }
-if(!$p=mysql_fetch_row(mysql_query("select foto, lead, body, views, menu from ".$sitestatus."pagina where id='$id' and verwijderd!='j'")))
-	{ $id=strtolower($id); $p=mysql_fetch_row(mysql_query("select foto, lead, body, views, menu from ".$sitestatus."pagina where naam like '$id' and verwijderd!='j'")); }
-if (!empty($p))
-  {	
-	$foto=$p[0];
-	$lead=stripslashes($p[1]);
-	$body=stripslashes($p[2]);
-	$views=$p[3];
+$zoek = $_REQUEST['zoek'];
+if (empty($id)) {
+    $id = 1;
+}
+if(!$p = db_row("select foto, lead, body, views, menu from " . $sitestatus . "pagina where id = '$id' and verwijderd != 'j'")) {
+    $id = strtolower($id);
+    $p = bd_row("select foto, lead, body, views, menu from " . $sitestatus .
+        "pagina where naam like '$id' and verwijderd != 'j'");
+}
+if (!empty($p)) {
+	$foto = $p[0];
+	$lead = stripslashes($p[1]);
+	$body = stripslashes($p[2]);
+	$views = $p[3];
 	$views++;
-	mysql_query("update ".$sitestatus."pagina set views='$views' where id='$id'");
-	$s=$p[4];
+	db_query("update " . $sitestatus . "pagina set views = '$views' where id = '" . db_esc($id) .
+	"'");
+	$s = $p[4];
+  } else {
+    $foto = 1;
+   	$lead = "Geselecteerde pagina is niet gevonden";
+   	$body = '';
+	$s = 1;
   }
-  else
-  { $foto=1;
-   	$lead="Geselecteerde pagina is niet gevonden";
-   	$body='';
-	$s=1;
-  }
-if ($subdomein=='dev') { $s=$s+10; }  
-  
-include('components/header.php');
-?>
+if ($subdomein == 'dev') {
+    $s = $s + 10;
+}
+include('components/header.php'); ?>
 
 <div id="linkerbalk">
 <?php include('components/nieuws_box.php'); ?>
@@ -48,35 +51,35 @@ include('components/header.php');
     </form><br /><br />
     <table>
 <?php
-	if (!empty($zoek))
-	  {	
+	if (!empty($zoek)) {
 	
-		$q="select deelnemers.pagina, personen.voornaam, personen.voorvoegsel, personen.achternaam from personen, deelnemers where deelnemers.persoon=personen.id and deelnemers.verwijderd!='j' and personen.verwijderd!='j' and deelnemers.bevestigd='j' "; 
-		$termen=explode(' ',$zoek);
-		foreach ($termen as $val)
-		  { $e=mysql_real_escape_string($val);
-		  	$q.= "and (personen.voornaam like '%$val%' or personen.achternaam like '%$val%' or deelnemers.pagina like '%$e%') "; }
-		$q.=" order by personen.achternaam, personen.voornaam";
+		$q = "select deelnemers.pagina, personen.voornaam, personen.voorvoegsel, personen.achternaam from personen, deelnemers where deelnemers.persoon = personen.id and deelnemers.verwijderd != 'j' and personen.verwijderd != 'j' and deelnemers.bevestigd = 'j' ";
+		$termen = explode(' ',$zoek);
+		foreach ($termen as $val) {
+		    $e=db_esc($val);
+		  	$q .= "and (personen.voornaam like '%$val%' or personen.achternaam like '%$val%' or deelnemers.pagina like '%$e%') ";
+		}
+		$q .=" order by personen.achternaam, personen.voornaam";
 		
-		$dres=mysql_query($q) or die(mysql_error());
+		$dres = db_query($q);
 		
-		while ($dr=mysql_fetch_row($dres))
-		  {  
+		while ($dr = db_row($dres)) {
 ?>
 		<tr>
-			<td><a href="<?php echo $protocol.$domein; ?>/deelnemers/<?php echo $dr[0];?>"><?php if (!empty($dr[1])) { echo $dr[1]." "; } if (!empty($dr[2])) { echo $dr[2]." "; } echo $dr[3];?></a></td>
+			<td><a href="<?php echo $protocol . $domein; ?>/deelnemers/<?php echo $dr[0];?>"><?php if (!empty($dr[1])) {
+			    echo $dr[1]." ";
+			}
+			if (!empty($dr[2])) {
+			    echo $dr[2]." ";
+			}
+			echo $dr[3];?></a></td>
 		 </tr>   
 <?php    
-		  } // while
-	  } // if...
+		  }
+	  }
 ?>	
 	</table>
     </div>    
-	
-    
-
-
-    
 </div>
 
 <div id="rechterbalk">

@@ -5,12 +5,8 @@ setlocale(LC_ALL,"nl_NL");
 require_once('../../libs/connect.php');
 require_once('../../logon/check_logon.php');
 
-$div=$_REQUEST['div'];
-$datum_select=$_REQUEST['datum_select'];
-
-
-
-//echo "div: $div, datum_select: $datum_select <br>";
+$div = $_REQUEST['div'];
+$datum_select = $_REQUEST['datum_select'];
 
 include('datum_invoer_body.php');
 ?>

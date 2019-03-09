@@ -1,5 +1,5 @@
 <?php 
-$s=4;
+$s = 4;
 include('components/header.php'); ?>
 <div id="linkerbalk">
 <?php include('components/nieuws_box.php'); ?>

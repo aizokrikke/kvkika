@@ -4,23 +4,23 @@ setlocale(LC_ALL,"nl_NL");
 require('../../libs/connect.php');
 require('../../logon/check_logon.php');
 
-$id=mysql_real_escape_string($_REQUEST['id']);
-$veld=mysql_real_escape_string($_REQUEST['veld']);
-$tekst=mysql_real_escape_string($_REQUEST['tekst']);
+$id = db_esc($_REQUEST['id']);
+$veld = db_esc($_REQUEST['veld']);
+$tekst = db_esc($_REQUEST['tekst']);
 
 
-if ($id=='nieuws_nieuw')
-  { mysql_query("insert into dev_nieuws ($veld) values ('$tekst')"); }
-  else
-  { 
-  	$r=mysql_fetch_row(mysql_query("select status from nieuws where id='$id'"));
-	$status=$r[0];
-  	mysql_query("update dev_nieuws set $veld='$tekst' where id='$id'"); 
-  	if ($status=='public')
-	  {  mysql_query("update nieuws set $veld='$tekst' where id='$id'"); }
-  }
+if ($id == 'nieuws_nieuw') {
+    db_query("insert into dev_nieuws ($veld) values ('$tekst')");
+} else {
+  	$r = db_row("select status from nieuws where id='$id'");
+	$status = $r[0];
+  	db_query("update dev_nieuws set $veld='$tekst' where id='$id'");
+  	if ($status == 'public') {
+  	    db_query("update nieuws set $veld='$tekst' where id='$id'");
+  	}
+}
 
-$r=mysql_fetch_row(mysql_query("select id, lead, body, datum, status from dev_nieuws where id='$id' and verwijderd!='j'"))
+$r = db_row("select id, lead, body, datum, status from dev_nieuws where id='$id' and verwijderd!='j'");
 
 ?>
         <div class="cms_table_item"><a href="?state=admin&go=content&m=nieuws&act=del&id=<?php echo $r[0]; ?>"><img src="beheer/img/24x24/editcut.png" title="verwijderen" alt="verwijderen"></a></div>

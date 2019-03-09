@@ -25,44 +25,45 @@ function close_upload() {
 
 <body>
 <?php
-$do=$_REQUEST['do'];
-$id=mysql_real_escape_string($_REQUEST['id']);
-$bestand=$_REQUEST['bestand'];
+$do = $_REQUEST['do'];
+$id = db_esc($_REQUEST['id']);
+$bestand = $_REQUEST['bestand'];
 
-if ($do=='store')
-  {
+if ($do == 'store') {
 	 // formulier verwerken
-	 $error= $_FILES["bestand"]["error"];
-	 if ($error > 0) 
-	   { echo "er is iets misgegaan"; }
-	   else
-	   {
+	 $error =  $_FILES["bestand"]["error"];
+	 if ($error > 0) {
+	     echo "er is iets misgegaan";
+	 } else {
 		 $tmp_name = $_FILES["bestand"]["tmp_name"];
 		 $name = $_FILES["bestand"]["name"];
 		 $filetype = $_FILES["bestand"]['type'];
-		 $parts=explode('.',$name);
-		 $ext=$parts[1];
+		 $parts = explode('.',$name);
+		 $ext = $parts[1];
 		 
-		 $tr=mysql_fetch_row(mysql_query("select id from doctypes where mime='$filetype' and extensie='$ext' and verwijderd!='j'"));
-		 if (empty($tr[0]))	{ $type_id=1; } else { $type_id=$tr[0]; }
-		 $nr=mysql_fetch_row(mysql_query("select waarde from system where parameter='last_upload'"));
-		 $nummer=$nr[0];
+		 $tr = db_row("select id from doctypes where mime='$filetype' and extensie='$ext' and verwijderd!='j'");
+		 if (empty($tr[0]))	{
+		     $type_id=1;
+		 } else {
+		     $type_id=$tr[0];
+		 }
+		 $nr = db_row("select waarde from system where parameter='last_upload'");
+		 $nummer = $nr[0];
 		 
-		 $filename=$nummer.".".$ext;
+		 $filename = $nummer.".".$ext;
 		 
-		 if (!move_uploaded_file($tmp_name,$attach_store.'/'.$filename))
-		   { echo "kan het bestand niet oplslaan in de map. controleer de rechten."; }
-		   else
-		   {
-			$u=$user['id'];
-			$tijd=time();   
-		   	mysql_query("insert into docs (naam, bestand, doctype, eigenaar, tijd) values ('$name','$filename','$type_id','$u','$tijd')") or die(mysql_error());
-			$doc=mysql_insert_id();
-			mysql_query("insert into draaiboek_docs (tmp_draaiboek,doc,tmp_verwijderd,lock_id,lock_tijd) values ('$id','$doc','n','$u','$tijd')") or die(mysql_error());
-			echo "het bestand ".$name."<br> is succesvol opgeslagen";
-		   }
+		 if (!move_uploaded_file($tmp_name,$attach_store.'/'.$filename)) {
+		     echo "kan het bestand niet oplslaan in de map. controleer de rechten.";
+		 } else {
+			$u = $user['id'];
+			$tijd = time();
+		   	db_query("insert into docs (naam, bestand, doctype, eigenaar, tijd) values ('$name','$filename','$type_id','$u','$tijd')");
+			$doc = db_insert_id();
+			db_query("insert into draaiboek_docs (tmp_draaiboek,doc,tmp_verwijderd,lock_id,lock_tijd) values ('$id','$doc','n','$u','$tijd')");
+			echo "het bestand " . $name . "<br> is succesvol opgeslagen";
+		 }
 		 $nummer++;
-		 mysql_query("update system set waarde='$nummer' where parameter='last_upload'");	   		   
+		 db_query("update system set waarde='$nummer' where parameter='last_upload'");
 	   }
 ?><br /><br />
 <form>
@@ -70,9 +71,7 @@ if ($do=='store')
 </form>
 
 <?php	 
-  }
-  else
-  {
+} else {
 ?>
 <h3>Bestand uploaden</h3>
 <form method="post" action="?" enctype="multipart/form-data" id="uploadform" name="uploadform">
@@ -82,10 +81,8 @@ Kies bestand<br />
 <input type="file" name="bestand" class="db_button" /><br /><br />
 <input type="button" name="button" value="toevoegen" onclick="do_form();" class="db_button" />
 </form>
-
-
 <?php
-  }
+}
 ?>  
 </body>
 </html>

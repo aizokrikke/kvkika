@@ -56,7 +56,7 @@ De Berg Op/Kinderen voor KiKa is een initiatief van Amersfoorter Hein van Wegen.
 <?php } ?>
 
 
-    <div id="colofon">Concept en design Concreet geeft vorm | Realisatie Weekbladen Groep Amersfoort</div>
+    <div id="colofon">Concept en design Concreet geeft vorm | Realisatie Reditus</div>
 </div>
 
 

@@ -1,59 +1,50 @@
 <?php 
-$s=4;
+$s = 4;
+$do = $_REQUEST['do'];
 
-$do=$_REQUEST['do'];
-
-
-if ($do=='herstellen')
-  {
-	$loginnaam=$_REQUEST['loginnaam'];
-	$email=$_REQUEST['email'];
+if ($do=='herstellen') {
+	$loginnaam = $_REQUEST['loginnaam'];
+	$email = $_REQUEST['email'];
 	
-	
-	if (!empty($loginnaam))
-	  {
-		  $l=mysql_real_escape_string($loginnaam);
-		  if ($lr=mysql_fetch_row(mysql_query("select id,email, login from personen where login='$l' and verwijderd!='j'")))
-			{ // login gevonden dus password resetten
-			  $status='succes';	
-			  $to=$lr[1];
-			  $id=$lr[0];
-			  $login=$lr[2];
+	if (!empty($loginnaam)) {
+		  $l=db_esc($loginnaam);
+		  if ($lr = db_row("select id,email, login from personen where login='$l' and verwijderd!='j'")) {
+		      // login gevonden dus password resetten
+			  $status = 'succes';
+			  $to = $lr[1];
+			  $id = $lr[0];
+			  $login = $lr[2];
 			} 
 	  }
-	if ($status!='succes')
-	  {
-		  if (!empty($email))
-			{
-				$e=mysql_real_escape_string($email);
-				$lres=mysql_query("select id, email, login from personen where email='$e' and verwijderd!='j'") or die(mysql_error());
-				if (mysql_num_rows($lres)==1)
-				  {
-					  $status='succes';
-					  $lr=mysql_fetch_row($lres);
-					  $id=$lr[0];
-					  $to=$lr[1];
-					  $login=$lr[2];
-				  }
-				  else
-				  { $fout[]='Er is geen unieke deelnemer gekoppeld aan het opgegeven emailadres'; }
-			}
-			else
-			{ $fout[]="geen geldige login of emailadres opgegeven"; }
+	if ($status != 'succes') {
+		  if (!empty($email)) {
+				$e=db_esc($email);
+				$lres = db_query("select id, email, login from personen where email = '$e' and verwijderd != 'j'");
+				if (db_num_rows($lres) == 1) {
+					  $status = 'succes';
+					  $lr = db_row($lres);
+					  $id = $lr[0];
+					  $to = $lr[1];
+					  $login = $lr[2];
+				  } else {
+				    $fout[] = 'Er is geen unieke deelnemer gekoppeld aan het opgegeven emailadres';
+				}
+			} else {
+		      $fout[] = "geen geldige login of emailadres opgegeven";
+		  }
 	  }
-	if ($status=='succes')
-	  {
-		  $pass=generate_password();  
-		  $pass_md5=md5($pass);
-		  mysql_query("update personen set password_md5='$pass_md5' where id='$id'") or die(mysql_error());
-		  $mes="<html><body>Je wachtwoord is opnieuw ingesteld.<br><br>Vanaf nu kun je inloggen met de volgende gegevens<br>Login: ".$login."<br>Wachtwoord: ".$pass."<br><br>Je kunt weer een eigen wachtwoord kiezen via instellingen op je eigen pagina.<br><br>Kinderen voor KiKa";
+	if ($status == 'succes') {
+		  $pass = generate_password();
+		  $pass_md5 = md5($pass);
+		  db_query("update personen set password_md5='$pass_md5' where id = '$id'");
+		  $mes = "<html><body>Je wachtwoord is opnieuw ingesteld.<br><br>Vanaf nu kun je inloggen met de volgende gegevens<br>Login: ".$login."<br>Wachtwoord: ".$pass."<br><br>Je kunt weer een eigen wachtwoord kiezen via instellingen op je eigen pagina.<br><br>Kinderen voor KiKa";
 		  $headers  = 'MIME-Version: 1.0' . "\r\n";
 		  $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 		  $headers .= 'From: Kinderen voor KiKa <info@kinderenvoorkika.nl>' . "\r\n";
-		  mail($to,'Wachtwoord is hersteld',$mes,$headers);	  
-	  }
-	  else
-	  { $fout[]="er is iets misgegaan. Wij kunnen jouw wachtwoord niet automatisch herstellen. Neem contact op met Kinderen voor KiKa via info@kinderenvoorkika.nl"; }
+		  mail($to,'Wachtwoord is hersteld', $mes, $headers);
+	  } else {
+	    $fout[] = "er is iets misgegaan. Wij kunnen jouw wachtwoord niet automatisch herstellen. Neem contact op met Kinderen voor KiKa via info@kinderenvoorkika.nl";
+	}
   }
   
   
@@ -73,20 +64,16 @@ include('components/header.php'); ?>
 <h1>Wachtwoord herstellen</h1>
 
 <?php 
-if (!empty($fout))
-  {
+if (!empty($fout)) {
 	echo "<br>";  
-	foreach ($fout as $val) 
-	 {
-		 echo "<span class=\"formfout\"><img src=\"img/letop.png\" alt=\"Fout!\" titel=\"Fout!\" align=\"absmiddle\"> $val</span><br />
-";
+	foreach ($fout as $val) {
+		 echo "<span class=\"formfout\"><img src=\"img/letop.png\" alt=\"Fout!\" titel=\"Fout!\" align=\"absmiddle\"> $val</span><br />\n";
 	 }
 	 echo "<br>";
   }
    
   
-switch ($status) 
-  {  
+switch ($status) {
 	case 'succes':
 ?>
 <span class="body">
@@ -98,8 +85,6 @@ Er is een emailbericht naar je verzonden met je nieuwe wachtwoord. Met deze inlo
 
 <?php
   	break;
-
-
   
 	default:  
 ?>	  
@@ -113,7 +98,7 @@ E-mail<br />
 
 <?php 
 	break;
-  } // switch
+  }
 ?>  
 </form>
 </div>
@@ -130,7 +115,5 @@ de inzet van:<br /><br />
 </div>
 
 <div style="clear: both"></div>
-
-
 
 <?php include('components/footer.php'); ?>

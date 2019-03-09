@@ -3,8 +3,7 @@
 <?php } 
 
 
-if ($succes!='j')
-  {
+if ($succes != 'j') {
 ?>
     <form method="post" id="mailform">
     <div class="uc_formregel">
@@ -20,9 +19,7 @@ if ($succes!='j')
     <input type="button" name="doe" value="aanmelden" class="kika_button" onClick="process_mailform();">
     </form>
 <?php
-  }
-  else
-  {
+  } else {
 ?>
 	Bedankt voor je belangstelling. <br>
 <br>
