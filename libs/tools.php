@@ -143,7 +143,7 @@ function persoon($id) {
 	return $naam;
 }
 
-function stuur_bericht($aan, $ond, $bericht, $html="<html><body></body></html>") {
+function stuur_bericht($aan, $ond, $bericht, $html = "<html><body></body></html>") {
 /* LEGACY */	
 	$to['naam']=persoon($aan);
 	$r = db_row("select email from personen where id = '$aan'");
@@ -252,7 +252,7 @@ function show_mail_body ($in) {
 	return $b;
 }
 
-function stuur_mail($aan, $ond, $van, $html='', $text='', $type='multipart') {
+function stuur_mail($aan, $ond, $van, $html = '', $text = '', $type = 'multipart') {
 /* wrapper voor mail-functie voor sturen van multipart mailberichten
 	$aan, $van: emailadres-object of een emailadres
 
@@ -491,7 +491,7 @@ function inschrijven_toegestaan() {
 } // inschrijven_toegestaan
 
 
-function rotate_image($file,$hoek) {
+function rotate_image($file, $hoek) {
 	preg_match("/(\/)(\w+)(\.)(\w+)$/i", strtolower($file), $matches);
 	$naam = $matches[2];
 	$ext = $matches[4];
