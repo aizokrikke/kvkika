@@ -1,5 +1,6 @@
 <?php  
 // formulieren processen
+setlocale(LC_ALL,"nl_NL");
 
 include('components/header.php');
 

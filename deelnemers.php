@@ -683,7 +683,7 @@ if ($user['id'] == $pagina['usr']) {?>
             <input type="hidden" name="adres" value="<?php echo $adres; ?>">
             <input type="hidden" name="plaats" value="<?php echo $plaats; ?>">
             <input type="hidden" name="telefoon" value="<?php echo $telefoon; ?>">
-            <input type="hidden" name="status" value="<?php echo $email; ?>">
+            <input type="hidden" name="status" value="<?php echo $status; ?>">
             <input type="hidden" name="voorwaarden" value="<?php echo $voorwaarden; ?>">
 			<input type="hidden" name="opnieuw" value="j">
             <input type="hidden" name="do" value="akkoord">

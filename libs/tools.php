@@ -322,7 +322,7 @@ function stuur_mail($aan, $ond, $van, $html='', $text='', $type='multipart') {
 			break;		
 		}
 				
-		$out = mail($to, $ond, $bericht, $headers, "-f".$aan['email']);
+		$out = mail($to, $ond, $bericht, $headers, "-f".$van['email']);
 		$bericht = db_esc($bericht);
 		$headers = db_esc($headers);
 		$to = db_esc($to);
