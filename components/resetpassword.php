@@ -2,12 +2,13 @@
 $s = 4;
 $do = $_REQUEST['do'];
 
-if ($do=='herstellen') {
+if ($do == 'herstellen') {
 	$loginnaam = $_REQUEST['loginnaam'];
 	$email = $_REQUEST['email'];
+	$status = '';
 	
 	if (!empty($loginnaam)) {
-		  $l=db_esc($loginnaam);
+		  $l = db_esc($loginnaam);
 		  if ($lr = db_row("select id,email, login from personen where login='$l' and verwijderd!='j'")) {
 		      // login gevonden dus password resetten
 			  $status = 'succes';
@@ -16,23 +17,27 @@ if ($do=='herstellen') {
 			  $login = $lr[2];
 			} 
 	  }
+
+
 	if ($status != 'succes') {
 		  if (!empty($email)) {
-				$e=db_esc($email);
+				$e = db_esc($email);
 				$lres = db_query("select id, email, login from personen where email = '$e' and verwijderd != 'j'");
-				if (db_num_rows($lres) == 1) {
-					  $status = 'succes';
-					  $lr = db_row($lres);
-					  $id = $lr[0];
-					  $to = $lr[1];
-					  $login = $lr[2];
-				  } else {
+
+				if ($lres->num_rows == 1) {
+                    $status = 'succes';
+                    $lr = db_row($lres);
+                    $id = $lr[0];
+                    $to = $lr[1];
+                    $login = $lr[2];
+                } else {
 				    $fout[] = 'Er is geen unieke deelnemer gekoppeld aan het opgegeven emailadres';
 				}
 			} else {
 		      $fout[] = "geen geldige login of emailadres opgegeven";
 		  }
 	  }
+
 	if ($status == 'succes') {
 		  $pass = generate_password();
 		  $pass_md5 = md5($pass);

@@ -62,7 +62,7 @@
 
     function db_num_rows($resource) {
 
-        return $resource->num_rows();
+        return $resource->num_rows;
     }
 
     function db_insert_id() {

@@ -49,13 +49,12 @@ switch ($do) {
 		$naam = db_esc($naam);
 		$bankrekening = db_esc($bankrekening);
 		$id = db_esc($id);
-		
 		db_query("insert into sponsoring (bedrag, van, rekening, voor) values ('$bedrag','$naam','$bankrekening','$id')");
 		
 		break;	
 	
 	case 'INSCHRIJVEN':
-		if ($soort!='estafette') {
+		if ($soort != 'estafette') {
 			if (!empty($tussenvoegsel)) {
 			    $naam = $tussenvoegsel . " " . $naam;
 			}
