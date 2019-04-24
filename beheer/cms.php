@@ -1,6 +1,7 @@
 <span class="kop"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>"><i class="fas fa-file-alt fa-fw"></i> Content</a></span>
 
-<?php 
+<?php
+setlocale(LC_ALL,"nl_NL,", 'nld_NLD');
 
 $m = $_REQUEST['m'];
 $act = $_REQUEST['act'];
@@ -41,7 +42,7 @@ switch ($m) {
 
 	case 'pagina':
 ?>
-		<span class="kop"><a href="?state=admin&go=content&m=pagina"><img src="beheer/img/content.png" alt="pagina's" title="pagina's" align="absmiddle" height="24" width="24"> Pagina's</a></span>	
+		<span class="kop"><a href="?state=admin&go=content&m=pagina"><i class="far fa-file-alt fa-fw"></i> Pagina's</a></span>
         <hr>
         <div id="cms_box_editor"></div>
 <?php	
@@ -304,10 +305,10 @@ switch ($m) {
 ?>
 			<div class="cms_regel">
 			<div class="cms_table_item"><?php if (($r[5]!='j') or ($recht_fixed=='j')) {
-			    ?><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=del&id=<?php echo $r[0]; ?>"><img src="beheer/img/24x24/editcut.png" title="verwijderen" alt="verwijderen"></a><?php
+			    ?><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=del&id=<?php echo $r[0]; ?>"><i class="far fa-trash-alt"></i></a><?php
 			    } else { ?><div style="width:24px;">&nbsp;</div><?php
 			    } ?></div>
-            <div class="cms_table_item"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=edit&id=<?php echo $r[0]; ?>"><img src="beheer/img/24x24/edit.png" title="bewerken" alt="bewerken"></a></div>
+            <div class="cms_table_item"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=edit&id=<?php echo $r[0]; ?>"><i class="fas fa-pencil-alt"></i></a></div>
             <div class="cms_table_naam"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=edit&id=<?php echo $r[0]; ?>"><?php echo $r[1]; ?></a>&nbsp;</div>
             <div class="cms_table_txt"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=edit&id=<?php echo $r[0]; ?>"><?php echo $r[2]; ?></a></div>
             <div class="cms_table_txt"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=edit&id=<?php echo $r[0]; ?>"><?php echo $r[3]; ?></a></div>
@@ -317,7 +318,7 @@ switch ($m) {
         }
 ?>
 		<br />
-		<a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=new"><img src="beheer/img/24x24/edit_add.png" width="16" height="16" align="absmiddle" alt="pagina toevoegen" title="pagina toevoegen" /> pagina toevoegen</a>
+		<a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=new"><i class="fas fa-plus-circle"></i> pagina toevoegen</a>
 <?php				
 				
     }
@@ -325,9 +326,11 @@ switch ($m) {
 	break;
 	
 	case 'nieuws':
-
+        setlocale(LC_ALL, 'nl_NL');
+        echo setlocale(LC_ALL, 0);
+//        var_dump(ResourceBundle::getLocales(''));
 ?>
-		<span class="kop"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>"><img src="beheer/img/news.png" alt="nieuwsberichten" title="nieuwsberichten" align="absmiddle" height="24" width="24"> Nieuws</a></span>	
+		<span class="kop"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>"><i class="fas fa-bullhorn fa-fw"></i> Nieuws</a></span>
         <hr>
  
  <?php
@@ -370,8 +373,8 @@ switch ($m) {
 ?>
         
         <div id="<?php echo "nieuws$r[0]";?>" class="cms_regel">
-        <div class="cms_table_item"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=del&id=<?php echo $r[0]; ?>"><img src="beheer/img/24x24/editcut.png" title="verwijderen" alt="verwijderen"></a></div>
-        <div class="cms_table_datum"><a href="javascript:void();" onclick="cms_datum(<?php echo $r[0]; ?>)"><?php echo strftime("%d-%B-%Y", $r[3]); ?></a></div>
+        <div class="cms_table_item"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=del&id=<?php echo $r[0]; ?>"><i class="far fa-trash-alt"></i></div>
+        <div class="cms_table_datum"><a href="javascript:void();" onclick="cms_datum(<?php echo $r[0]; ?>)"><?php echo strftime("%d %B %Y", $r[3]); ?></a></div>
         <div class="cms_table_txt"><a href="javascript:void();" onclick="cms_editor('<?php echo $r[0]; ?>','lead');"><?php if (!empty($r[1])) { echo $r[1]; } else {?><em>-- leeg --</em><?php } ?></a></div>
 		<div class="cms_table_txt"><a href="javascript:void();" onclick="cms_editor('<?php echo $r[0]; ?>','body');"><?php if (!empty($r[2])) { echo $r[2]; } else { ?><em>-- leeg --</em><?php } ?></a></div>
         <div class="cms_table_item"><a href="javascript:void();" onClick="doFlipNieuwsStatus('<?php echo $r[0]; ?>');"><img src="beheer/img/<?php if ($r[4]=='draft') { ?>draft.png<?php } else { ?>public.png<?php } ?>" title="<?php echo $r[4]; ?>" alt="<?php echo $r[4];?>"></a></div>        
@@ -382,7 +385,7 @@ switch ($m) {
 ?>
 
 		<br>
-		<a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=new"><img src="beheer/img/24x24/edit_add.png" width="16" height="16" align="absmiddle" alt="bericht toevoegen" title="bericht toevoegen"> bericht toevoegen</a>
+		<a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=new"><i class="fas fa-plus-circle"></i> bericht toevoegen</a>
 <?php        		   
 			  
         }
@@ -390,6 +393,10 @@ switch ($m) {
 	break;
 	
 	case 'logo':
+?>
+	    		<span class="kop"><a href="?state=admin&go=content&m=logo"><i class="fas fa-money-bill-wave fa-fw"></i> Sponsorlogo's</a></span>
+        <hr>
+<?php
 		if (!empty($do)) {
 		    // formulier afhandelen
 		  	switch ($act) {
@@ -470,6 +477,7 @@ switch ($m) {
 ?>			
 				<form action="?state=admin&go=content&m=logo&act=new&id=<?php echo $id;?>" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="opnieuw" value="j" />
+                <input type="hidden" name="live" value="j" />
                 <input type="hidden" name="oldfile" value="<?php file; ?>" />
                 <br /><br />
                 <table>
@@ -521,15 +529,13 @@ switch ($m) {
 			
 			default:
 ?>
-				<br /><br />
-				<h1>Sponsorlogo's</h1>
 				<table>
 <?php			
 				$res = db_query("select id, naam, volgorde, live from sponsorlogo where verwijderd!='j'");
 			 	while ($r = db_row($res)) {
 ?>
 					<tr>
-                    	<td><a href="?state=admin&go=content&m=logo&act=del&id=<?php echo $r[0]; ?>"><img src="img/24x24/editcut.png" /></a></td>
+                    	<td><a href="?state=admin&go=content&m=logo&act=del&id=<?php echo $r[0]; ?>"><i class="far fa-trash-alt"></i></a></td>
                         <td width="10"></td>
                         <td><a href="?state=admin&go=content&m=logo&act=edit&id=<?php echo $r[0]; ?>"><?php echo $r[1]; ?></a></td>
                         <td width="10"></td>
@@ -543,7 +549,7 @@ switch ($m) {
 ?>
 				</table><br />
                 <br />
-                <a href="?state=admin&go=content&m=logo&act=new"><img src="img/24x24/edit_add.png" align="absmiddle"/> toevoegen</a>
+                <a href="?state=admin&go=content&m=logo&act=new"><i class="fas fa-plus-circle"></i> toevoegen</a>
 <?php				  
 			break;
 		}
@@ -559,7 +565,7 @@ switch ($m) {
         }
 	
 ?>	
-		<span class="kop"><a href="?state=admin&go=content&m=menu"><img src="beheer/img/menu.png" alt="menu" title="menu" align="absmiddle" height="24" width="24"> Menu</a></span>	
+		<span class="kop"><a href="?state=admin&go=content&m=menu"><i class="fas fa-bars fa-fw"></i> Menu</a></span>
         <hr>
 <?php
 		switch ($act) {
@@ -568,7 +574,7 @@ switch ($m) {
 			  while ($r = db_row($res)) {
 ?>
 			<div class="cms_regel">
-            <div class="cms_table_item"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=edit&id=<?php echo $r[0]; ?>"><img src="beheer/img/24x24/edit.png" title="bewerken" alt="bewerken"></a></div>
+                <div class="cms_table_item"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=edit&id=<?php echo $r[0]; ?>"><i class="fas fa-pencil-alt"></i></a></div>
             <div class="cms_table_naam"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=edit&id=<?php echo $r[0]; ?>"><?php echo $r[1]; ?></a>&nbsp;</div>
             <div class="cms_table_txt"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>&act=edit&id=<?php echo $r[0]; ?>"><?php echo $r[2]; ?></a></div>
 			<div style="clear:both"></div>

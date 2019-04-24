@@ -1,4 +1,7 @@
 <?php
+error_reporting(0);
+
+setlocale(LC_ALL,"nl_NL");
 
 require('libs/connect.php');
 require('logon/check_logon.php');

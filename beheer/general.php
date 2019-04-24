@@ -129,7 +129,6 @@ switch ($act) {
             if ($r[3]!='date') {
                 echo $r[2];
             } else {
-                setlocale(LC_ALL,'nl_NL','Dutch_Netherlands' );
                 echo strftime("%d %B %Y",strtotime($r[2]));
             } ?></a>
 <?php	

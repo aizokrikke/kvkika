@@ -60,8 +60,9 @@ switch ($do) {
 	break;
 	
 	case 'opslaan':
+
 	  switch ($act) {
-		case 'edit':  
+		case 'edit':
 			$pw1 = $_REQUEST['pw1'];
 			$pw2 = $_REQUEST['pw2'];
 			$voornaam = $_REQUEST['voornaam'];
@@ -87,15 +88,16 @@ switch ($do) {
 				$r = db_row("select password_md5 from personen where id='" . db_esc($persoon_id) . "' and verwijderd!='j'");
 				$passmd5 = $r[0];
 			  }
-		  
-			if (db_row("select id from personen where login='" . db_row($deelnemerlogin) . "' and id!='" . db_row($persoon_id) . "' and verwijderd != 'j'")) {
+
+			if (db_row("select id from personen where login='" . db_esc($deelnemerlogin) . "' and id!='" . db_esc($persoon_id) . "' and verwijderd != 'j'")) {
 			    $err[] = "Login is al in gebruik";
 			}
-				
+
+
 			if (empty($err)) {
 				//echo "deelnemer_id: $id<br>";
 				db_query("update deelnemers set school='" . db_esc($school) . "',pagina='" . db_esc($pagina) . "' where id = '" . db_esc($id) . "'");
-				//echo "persoon_id: $persoon_id<br>";
+//				echo "persoon_id: $persoon_id<br>";
 				db_query("update personen set voornaam='" . db_esc($voornaam) . "', voorvoegsel ='" . db_esc($voorvoegsel) . "', achternaam='" .
                     db_esc($achternaam) . "', email = '" . db_esc($email)."', login = '".db_esc($deelnemerlogin) . "', login_md5 = '$loginmd5', 
                     password_md5 = '$passmd5', adres = '" . db_esc($adres)."', adres_nr = '" . db_esc($adres_nr) . "',postcode = '" .
