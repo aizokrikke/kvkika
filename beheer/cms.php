@@ -326,9 +326,6 @@ switch ($m) {
 	break;
 	
 	case 'nieuws':
-        setlocale(LC_ALL, 'nl_NL');
-        echo setlocale(LC_ALL, 0);
-//        var_dump(ResourceBundle::getLocales(''));
 ?>
 		<span class="kop"><a href="?state=<?php echo $state;?>&go=<?php echo $go;?>&m=<?php echo $m;?>"><i class="fas fa-bullhorn fa-fw"></i> Nieuws</a></span>
         <hr>
